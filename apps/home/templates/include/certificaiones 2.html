@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<section class="module-sm" id="certificaciones">
+    {#    <div class="container">#}
+    {#        <div class="row">#}
+    {#            <div class="col-md-8 m-auto">#}
+    {#                <div class="module-title text-center">#}
+    {#                    <h2>Certificaciones</h2>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="owl-carousel clients-carousel" data-carousel-options="{&quot;items&quot;:&quot;3&quot;}">
+                    {% for i in certificaciones %}
+                        {% if i.img %}
+                            <div class="client"><a href="{{ i.url_referencia }}" target="_blank"><img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}"></a></div>
+                        {% else %}
+                            <div class="client">><a href="{{ i.url_referencia }}" target="_blank"><img src="{% static 'assets/images/clients/logo-1.png' %}" alt=""></a></div>
+                        {% endif %}
+                    {% empty %}
+                        <p>Sin info</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
