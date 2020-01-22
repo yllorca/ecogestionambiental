@@ -1,0 +1,82 @@
+{% load  staticfiles %}
+<section class="module p-5" id="servicios">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 m-auto">
+                <div class="module-title text-center">
+                    <h2>Servicios</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row row-portfolio-filter m-b-30">
+            <div class="col-md-12">
+                <ul class="filters h5" id="filters">
+                    <li><a class="current" href="#" data-filter="*">All</a></li>
+                    <li><a href="#" data-filter=".vigilancia">Vigilancia Ambiental</a></li>
+                    <li><a href="#" data-filter=".estudios">Estudios</a></li>
+                    <li><a href="#" data-filter=".monitoreos">Monitoreos</a></li>
+                    <li><a href="#" data-filter=".laboratorio">Laboratorio</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row row-portfolio row-gutter" data-columns="3">
+            <div class="grid-sizer"></div>
+            <div class="portfolio-item vigilancia">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-1.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">Mutualismi</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+            <div class="portfolio-item estudios">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-2.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">The Perfume</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+            <div class="portfolio-item estudios">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-3.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">Bumblebee Icons</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+            <div class="portfolio-item monitoreos">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-4.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">Greedy Emperor</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+            <div class="portfolio-item laboratorio">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-5.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">Bluetooth Speaker</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+            <div class="portfolio-item estudios">
+                <div class="portfolio-wrapper">
+                    <img src="{% static 'assets/images/portfolio/img-6.jpg' %}" alt="">
+                    <div class="portfolio-overlay"></div>
+                    <div class="portfolio-caption">
+                        <h5 class="portfolio-title">Candy Icons</h5>
+                    </div><a class="portfolio-link" href="portfolio-single-1.html"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

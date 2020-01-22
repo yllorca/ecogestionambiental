@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<header class="header header-right">
+    <div class="container-fluid">
+        <!-- Logos-->
+        <div class="inner-header"><a class="inner-brand" href="index.html"><img class="brand-dark" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""><img class="brand-light" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""></a></div>
+        <!-- Navigation-->
+        <div class="inner-navigation collapse">
+            <div class="inner-navigation-inline">
+                <div class="inner-nav onepage-nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#nosotros">Quiénes Somos</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#equipo">Equipo</a></li>
+                        <li><a href="#certificaciones">Certificaciones</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a class="nav-btn external" href="#">
+											<div class="btn btn-circle btn-success">Área clientes</div></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu-->
+        <div class="nav-toggle"><a href="#" data-toggle="collapse" data-target=".inner-navigation"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a></div>
+    </div>
+</header>
