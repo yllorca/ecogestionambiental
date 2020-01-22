@@ -9,77 +9,35 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            {% for i in integrantes %}
+                <div class="col-md-3">
                 <div class="team-item m-b-30">
-                    <div class="team-image"><img src="{% static 'assets/images/team/1.jpg' %}" alt="">
-                        <div class="team-content">
-                            <h5>Jason Ford</h5>
-                            <p>Designer</p>
-                        </div>
-                        <div class="team-content-social">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
+                    {% if i.img %}
+                        <div class="team-image"><img src="{{ i.img.url }}" alt="{{ i.nombre_completo }}">
+                    {% else %}
+                        <div class="team-image"><img src="{% static 'assets/images/team/1.jpg' %}" alt="">
+                    {% endif %}
+                    <div class="team-content">
+                        <h5>{{ i.nombre_completo }}</h5>
+                        <p>{{ i.cargo }}</p>
+                    </div>
+                    <div class="team-content-social">
+                        <ul>
+                            {% if i.url_linkedin %}
+                                <li><a href="{{ url_linkedin }}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                            {% endif %}
+                            {% if i.url_twitter %}
+                                <li><a href="{{ i.url_twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="team-item m-b-30">
-                    <div class="team-image"><img src="{% static 'assets/images/team/2.jpg' %}" alt="">
-                        <div class="team-content">
-                            <h5>Michael Andrews</h5>
-                            <p>Developer</p>
-                        </div>
-                        <div class="team-content-social">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="team-item m-b-30">
-                    <div class="team-image"><img src="{% static 'assets/images/team/3.jpg' %}" alt="">
-                        <div class="team-content">
-                            <h5>Samuel Banks</h5>
-                            <p>Developer</p>
-                        </div>
-                        <div class="team-content-social">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="team-item m-b-30">
-                    <div class="team-image"><img src="{% static 'assets/images/team/3.jpg' %}" alt="">
-                        <div class="team-content">
-                            <h5>Samuel Banks</h5>
-                            <p>Developer</p>
-                        </div>
-                        <div class="team-content-social">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-vine"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            {% empty %}
+                <p>No hay integrantes publicados</p>
+            {% endfor %}
             </div>
         </div>
     </div>
