@@ -123,6 +123,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@mg.ecogestionambiental.cl'
+EMAIL_HOST_PASSWORD = '7e1c70479fde1c0096c63e1d42176c3d-9dfbeecd-eb1004f2'
+EMAIL_MAIN = "Ecogestion Ambiental Ltda <noresponder@ecogestionambiental.cl>"
+EMAIL_USE_TLS = True
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")

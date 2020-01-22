@@ -68,9 +68,10 @@
         <a class="scroll-top" href="#top"><i class="fa fa-angle-up"></i></a>
     </div>
     <!-- Wrapper end-->
-
 </div>
 <!-- Layout end-->
+
+
 
 <!-- Scripts-->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -81,5 +82,9 @@
 <script src="{% static 'assets/js/plugins.min.js' %}"></script>
 <script src="{% static 'assets/js/charts.js' %}"></script>
 <script src="{% static 'assets/js/custom.min.js' %}"></script>
+
+{% block custom-js %}
+{% endblock custom-js %}
+
 </body>
 </html>

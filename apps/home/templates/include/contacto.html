@@ -15,43 +15,25 @@
                     <p id="id_error"></p>
                 </div>
                 <!-- Error Contacto Form-->
-                <form id="form-contacto-alumni" method='POST'>
+                <form id="form-contacto" method='POST'>
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 {% render_field  form.nombre_completo.label %}
                                 {% render_field  form.nombre_completo class="form-control" placeholder=form.nombre_completo.label  %}
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                {% render_field  form.rut.label %}
-                                {% render_field  form.rut class="form-control" placeholder=form.rut.label %}
+                                {% render_field  form.fono.label %}
+                                {% render_field  form.fono class="form-control" placeholder=form.fono.label %}
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {% render_field  form.fono_contacto.label %}
-                                {% render_field  form.fono_contacto class="form-control" placeholder=form.fono_contacto.label %}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 {% render_field  form.email.label %}
                                 {% render_field  form.email class="form-control" placeholder=form.email.label %}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {% render_field  form.sede.label %}
-                                {% render_field  form.sede class="form-control" placeholder=form.sede.label %}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {% render_field  form.tema.label %}
-                                {% render_field  form.tema class="form-control" placeholder=form.tema.label %}
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -62,7 +44,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="text-center">
-                                <button class="btn btn-round btn-success" type="submit" id="btn-form-contacto-alumni">Enviar</button>
+                                <button class="btn btn-round btn-success" type="submit" id="btn-form-contacto">Enviar</button>
                             </div>
                         </div>
                     </div>

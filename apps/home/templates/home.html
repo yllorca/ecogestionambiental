@@ -31,3 +31,45 @@
 {% block footer %}
     {% include 'include/footer.html' %}
 {% endblock footer %}
+
+{% block custom-js %}
+    <script>
+
+        $(document).ready(function(){
+
+            //form-contacto
+            $('#div-errores').hide();
+
+            $("#form-contacto").on("submit", function(){
+                let csrftoken = $("[name=csrfmiddlewaretoken]").val();
+                $('#btn-form-contacto').html('Enviando...');
+                $.ajax({
+                    url: "{% url 'home:form-contacto-ajax' %}",
+                    type: 'POST',
+                    data: $("#form-contacto").serialize(),
+                    headers:{
+                        "X-CSRFToken": csrftoken
+                    },
+                    success:function(data){
+                        if(data.respuesta=='ok'){
+                            let emisor = $('#id_nombre_completo').val();
+                            $('#emisor').html(emisor);
+                            $('#btn-form-contacto').html('Enviar');
+                            $('#ContactonModal').modal('show');
+                            $('#form-contacto')[0].reset();
+                            $('#div-errores').hide();
+                        }
+                        else{//data.respuesta=='error'
+                            $('#id_error').html('');
+                            $('#id_error').html(data.mensaje);
+                            $('#btn-form-contacto').html('Enviar');
+                            $('#div-errores').show();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+{% endblock custom-js %}
