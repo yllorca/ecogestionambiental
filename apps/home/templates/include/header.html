@@ -2,20 +2,20 @@
 <header class="header header-right">
     <div class="container-fluid">
         <!-- Logos-->
-        <div class="inner-header"><a class="inner-brand" href="index.html"><img class="brand-dark" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""><img class="brand-light" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""></a></div>
+        <div class="inner-header"><a class="inner-brand" href="{% url 'home:home' %}"><img class="brand-dark" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""><img class="brand-light" src="{% static 'assets/images/logo-ecogestion.png' %}" width="240px" alt=""></a></div>
         <!-- Navigation-->
         <div class="inner-navigation collapse">
             <div class="inner-navigation-inline">
-                <div class="inner-nav onepage-nav">
+                <div class="inner-nav">
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#nosotros">Quiénes Somos</a></li>
-                        <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#equipo">Equipo</a></li>
-                        <li><a href="#certificaciones">Certificaciones</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="{% url 'home:home' %}#home">Home</a></li>
+                        <li><a href="{% url 'home:home' %}#nosotros">Quiénes Somos</a></li>
+                        <li><a href="{% url 'home:home' %}#servicios">Servicios</a></li>
+                        <li><a href="{% url 'home:home' %}#equipo">Equipo</a></li>
+                        <li><a href="{% url 'home:home' %}#certificaciones">Certificaciones</a></li>
+                        <li><a href="{% url 'home:home' %}#contacto">Contacto</a></li>
                         <li><a class="nav-btn external" href="#">
-											<div class="btn btn-circle btn-success">Área clientes</div></a></li>
+                            <div class="btn btn-circle btn-success">Área clientes</div></a></li>
                     </ul>
                 </div>
             </div>

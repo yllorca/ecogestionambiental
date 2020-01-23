@@ -1,0 +1,35 @@
+{% load staticfiles %}
+
+<section class="module">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="portfolio-content">
+                    <p><a href="{{ servicio.img.url }}" title="{{ servicio.nombre }}" rel="single-photo"><img src="{{ servicio.img.url }}" alt=""></a></p>
+                </div>
+            </div>
+            <div class="col-lg-6" data-sticky_parent>
+                <div class="portfolio-sidebar sticky-sidebar" data-sticky_column>
+                    <h3 class="single-portfolio-title">{{ servicio.nombre }}</h3>
+                    <p>
+                        {{ servicio.descripcion|safe }}
+                    </p>
+                    <div class="portfoli-details">
+                        <ul>
+                            <li>
+                                <h5>Share:</h5>
+                                <ul class="social-icons">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
