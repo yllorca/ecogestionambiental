@@ -1,6 +1,7 @@
+import xlwt
 from django.contrib.auth import logout
 from django.core.mail import EmailMultiAlternatives
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from allauth.account.decorators import verified_email_required
 from django.template.loader import get_template
@@ -8,6 +9,8 @@ from django.template.loader import get_template
 from apps.reclamo.models import Reclamo, Respuesta
 from apps.reclamo.forms import ReclamoPanelForm
 from apps.cliente.models import Cliente
+from apps.reclamo.filters import ReclamoFilter
+
 
 def LogoutView(request):
     logout(request)
@@ -16,7 +19,51 @@ def LogoutView(request):
 @verified_email_required
 def PanelView(request):
     data = dict()
+
     data['mi_reclamo'] = Reclamo.objects.filter(cliente__usuario=request.user)
+
+    reclamos_staff = Reclamo.objects.all().order_by('id')
+
+    data['reclamos_staff'] = reclamos_staff
+
+    reclamos_filter = ReclamoFilter(request.GET, queryset=reclamos_staff)
+
+    data['filter'] = reclamos_filter
+
+    if request.method == 'GET' and 'accion_requerida' in request.GET:
+
+        if request.GET['accion_requerida'] == 'exportar_datos':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="reclamos.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Registros')
+
+            # Sheet header, first row
+            row_num = 0
+
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+
+            columns = ['Fecha', 'Tipo de Solicitud', 'Categoría', 'Cliente', 'Estado']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+
+            for registro in reclamos_filter.qs:
+                row_num += 1
+                ws.write(row_num, 0, '{}/{}/{}'.format(registro.fecha_ingreso.day, registro.fecha_ingreso.month,
+                                                       registro.fecha_ingreso.year), font_style)
+                ws.write(row_num, 1, registro.get_tipo_solicitud_display(), font_style)
+                ws.write(row_num, 2, registro.get_categoria_display(), font_style)
+                ws.write(row_num, 3, registro.cliente.razon_social, font_style)
+                ws.write(row_num, 4, registro.get_estado_display(), font_style)
+
+            wb.save(response)
+            return response
 
     return render(request, 'panel.html', data)
 
