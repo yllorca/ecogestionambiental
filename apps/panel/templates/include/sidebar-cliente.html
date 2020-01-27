@@ -1,0 +1,39 @@
+<hr class="sidebar-divider">
+
+<div class="sidebar-heading">
+    Gestión de reclamos
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reclamos" aria-expanded="true" aria-controls="reclamos">
+        <i class="fas fa-fw fa-file-alt"></i>
+        <span>Reclamos / Sugerencias</span>
+    </a>
+    <div id="reclamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Reclamos / Sugerencias:</h6>
+            <a class="collapse-item" href="{% url 'panel:panel' %}">Ver todas las solicitudes</a>
+            <a class="collapse-item" href="{% url 'panel:crear-reclamo' %}">Ingresar una solicitud</a>
+
+        </div>
+    </div>
+</li>
+
+<hr class="sidebar-divider">
+
+{#<div class="sidebar-heading">#}
+{#    Gestión de empresas#}
+{#</div>#}
+{##}
+{#<li class="nav-item">#}
+{#    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#empresa" aria-expanded="true" aria-controls="empresa">#}
+{#        <i class="fas fa-fw fa-building"></i>#}
+{#        <span>Mis empresas</span>#}
+{#    </a>#}
+{#    <div id="empresa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">#}
+{#        <div class="bg-white py-2 collapse-inner rounded">#}
+{#            <h6 class="collapse-header">Registro de empresas:</h6>#}
+{#            <a class="collapse-item" href="#">Listar</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</li>#}

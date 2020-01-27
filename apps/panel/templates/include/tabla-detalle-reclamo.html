@@ -1,0 +1,27 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th>Estado</th>
+            <td>{{ detalle_reclamo.get_estado_display }}</td>
+        </tr>
+        <tr>
+            <th>Fecha de Ingreso</th>
+            <td>{{ detalle_reclamo.fecha_ingreso }}</td>
+        </tr>
+         <tr>
+            <th>Tipo de Solicitud</th>
+            <td>{{ detalle_reclamo.get_tipo_solicitud_display }}</td>
+        </tr>
+        <tr>
+            <th>Categoría</th>
+            <td>{{ detalle_reclamo.get_categoria_display }}</td>
+        </tr>
+        <tr>
+            <th>Texto</th>
+            <td>{{ detalle_reclamo.texto}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

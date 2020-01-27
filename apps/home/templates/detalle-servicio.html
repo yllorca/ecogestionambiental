@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ nombre_servicio }} | {{ block.super }}
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/header.html' %}
+{% endblock header %}
+
+{% block page-header %}
+    {% include 'include/page-header.html' %}
+{% endblock page-header %}
+
+{% block servicios %}
+    {% include 'include/info-detalle-servicios.html' %}
+{% endblock servicios %}
+
+{% block footer %}
+    {% include 'include/footer.html' %}
+{% endblock footer %}
