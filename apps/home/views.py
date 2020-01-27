@@ -1,6 +1,8 @@
+from urllib.parse import quote_plus
+
 from django.core.mail import EmailMultiAlternatives
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, Http404
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import get_template
 
 from .models import Servcio, Equipo, Certificacion
@@ -13,6 +15,18 @@ def HomeView(request):
     data['certificaciones'] = Certificacion.objects.all().exclude(publicado=False).order_by('-id')
     data['form'] = ContactoForm()
     return render(request, 'home.html', data)
+
+def ServicioDetalleView(request, slug):
+    servicio = get_object_or_404(Servcio, slug=slug)
+    if not servicio.publicado:
+        raise Http404
+    share_string = quote_plus(servicio.nombre)
+    ctx = {
+        'nombre_servicio': servicio.nombre,
+        'servicio': servicio,
+        'share_string': share_string,
+    }
+    return render(request, 'detalle-servicio.html', ctx)
 
 def form_contacto_ajax(request):
     """
@@ -68,3 +82,5 @@ def form_contacto_ajax(request):
         data['respuesta'] = 'error'
 
     return JsonResponse(data)
+
+

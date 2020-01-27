@@ -34,7 +34,7 @@ class Servcio(models.Model):
                                   editable=True)
     publicado = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre
 
     class Meta:
@@ -72,7 +72,7 @@ class Equipo(models.Model):
                             editable=True)
     publicado = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre_completo
 
     class Meta:
@@ -88,7 +88,7 @@ class Certificacion(models.Model):
                             editable=True)
     publicado = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre_certificacion
 
     class Meta:
@@ -102,7 +102,7 @@ class Contacto(models.Model):
     mensaje = models.TextField()
     fecha = models.DateTimeField(auto_now=False, auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nombre_completo
 
     class Meta:
