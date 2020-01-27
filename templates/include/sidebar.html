@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'panel:panel' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <img src="{% static 'assets/images/logo-panel.png' %}" style="width: 48px" alt="">
+        </div>
+        <div class="sidebar-brand-text mx-3">ECOGESTION</div>
+    </a>
+
+{#    {% if request.user.is_superuser %}#}
+{#        {% include 'include/sidebar-admin.html' %}#}
+{#    {% endif %}#}
+
+    {% for group in user.groups.all %}
+        {% if group.name == 'clientes' %}
+            {% include 'include/sidebar-cliente.html' %}
+        {% endif %}
+    {% endfor %}
+
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    <!-- Nav Item - Charts -->
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>

@@ -1,0 +1,63 @@
+{% extends 'base-dashboard.html' %}
+
+{% block sidebar %}
+    {% include 'include/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block panel-title %}
+    {% include 'include/panel-title.html' %}
+{% endblock panel-title %}
+
+{% block nav %}
+    {% include 'include/nav.html' %}
+{% endblock nav %}
+
+{% block content %}
+   {% include 'include/form-crear-reclamo.html' %}
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/footer-panel.html' %}
+{% endblock footer %}
+
+{% block custom-js %}
+    <script>
+
+        $(document).ready(function(){
+
+            //form-contacto
+            $('#div-errores').hide();
+
+            $("#form-reclamo").on("submit", function(){
+                let csrftoken = $("[name=csrfmiddlewaretoken]").val();
+                $('#btn-form-reclamo').html('Enviando...');
+                $.ajax({
+                    url: "{% url 'panel:form-reclamo--ajax' %}",
+                    type: 'POST',
+                    data: $("#form-reclamo").serialize(),
+                    headers:{
+                        "X-CSRFToken": csrftoken
+                    },
+                    success:function(data){
+                        if(data.respuesta=='ok'){
+                            let emisor = $('#cliente').val();
+                            $('#emisor').html(emisor);
+                            $('#btn-form-reclamo').html('Enviar');
+                            $('#ContactonModal').modal('show');
+                            $('#form-reclamo')[0].reset();
+                            $('#div-errores').hide();
+                        }
+                        else{//data.respuesta=='error'
+                            $('#id_error').html('');
+                            $('#id_error').html(data.mensaje);
+                            $('#btn-form-reclamo').html('Enviar');
+                            $('#div-errores').show();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+{% endblock custom-js %}
