@@ -1,3 +1,4 @@
+{% load crispy_forms_tags %}
 <div class="row">
 
     <div class="col-xl-12 col-lg-12">
@@ -5,7 +6,13 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Detalles</h6>
-
+                {% if request.user.is_staff %}
+                    <div class="pull-right">
+                        <a data-toggle="modal" data-target="#modal_reclamo">
+                            <i class="fa fa-2x fa-edit"></i>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
             <!-- Card Body -->
             <div class="card-body">
@@ -18,12 +25,63 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Respuestas</h6>
-
+                {% if request.user.is_staff %}
+                    <div class="pull-right">
+                        <a data-toggle="modal" data-target="#modal_respuesta">
+                            <i class="fa fa-2x fa-plus"></i>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
             <!-- Card Body -->
             <div class="card-body">
                 {% include 'include/tabla-detalle-respuesta.html' %}
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- THE MODAL WE WILL BE USING -->
+<div class="modal fade" id="modal_reclamo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Editar información</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" method="POST" id="form-edit-reclamo" data-url="{% url 'panel:form-update-reclamo-ajax' pk_reclamo %}"> {% csrf_token %}
+                <div class="modal-body">
+                    {{ form_reclamo|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-form-edit-reclamo">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_respuesta" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Crear respuesta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" method="POST" id="form-respuesta-reclamo" data-url="{% url 'panel:form-respuesta-reclamo-ajax' %}"> {% csrf_token %}
+                <div class="modal-body">
+                    {{ form_respuesta|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-form-respuesta-reclamo">Guardar cambios</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

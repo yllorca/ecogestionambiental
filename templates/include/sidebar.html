@@ -9,7 +9,7 @@
         <div class="sidebar-brand-text mx-3">ECOGESTION</div>
     </a>
 
-    {% if request.user.is_superuser %}
+    {% if request.user.is_staff %}
         {% include 'include/sidebar-admin.html' %}
     {% endif %}
 

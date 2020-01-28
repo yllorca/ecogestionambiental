@@ -7,7 +7,7 @@ from allauth.account.decorators import verified_email_required
 from django.template.loader import get_template
 
 from apps.reclamo.models import Reclamo, Respuesta
-from apps.reclamo.forms import ReclamoPanelForm
+from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarReclamoPanelForm
 from apps.cliente.models import Cliente
 from apps.reclamo.filters import ReclamoFilter
 
@@ -72,9 +72,17 @@ def DetalleReclamoView(request, id):
 
     detalle_reclamo = Reclamo.objects.get(pk=id)
 
+    data['form_reclamo'] = EditarReclamoPanelForm(instance=detalle_reclamo)
+
     data['pk_reclamo'] = id
     data['detalle_reclamo'] = detalle_reclamo
     data['mi_respuesta'] = Respuesta.objects.filter(reclamo_id=id)
+
+    form_respuesta = RespuestaPanelForm()
+    form_respuesta.fields['reclamo'].initial = id
+    form_respuesta.fields['usuario_interno'].initial = request.user
+
+    data['form_respuesta'] = form_respuesta
 
     return render(request, 'panel-detalle-reclamo.html', data)
 
@@ -166,6 +174,49 @@ def form_enviar_reclamo_ajax(request):
             data['mensaje'] = mensaje_error
     else:
         data['respuesta'] = 'error'
+
+    return JsonResponse(data)
+
+
+def update_reclamo_ajax(request, id):
+    data = dict()
+
+    detalle_reclamo = Reclamo.objects.get(pk=id)
+
+    if request.method == 'POST':
+        form_reclamo = EditarReclamoPanelForm(request.POST, instance=detalle_reclamo)
+        if form_reclamo.is_valid():
+            data['respuesta'] = 'ok'
+            form_reclamo.save()
+        else:
+            data['respuesta'] = 'error'
+            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+            for e in form_reclamo.errors:
+                mensaje_error = mensaje_error + ' [{}] '.format(e)
+            data['mensaje'] = mensaje_error
+    else:
+        data['respuesta'] = 'error'
+        data['form_reclamo'] = EditarReclamoPanelForm(request.POST, instance=detalle_reclamo)
+
+    return JsonResponse(data)
+
+def respuesta_reclamo_ajax(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form_respuesta = RespuestaPanelForm(request.POST)
+        if form_respuesta.is_valid():
+            data['respuesta'] = 'ok'
+            form_respuesta.save()
+        else:
+            data['respuesta'] = 'error'
+            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+            for e in form_respuesta.errors:
+                mensaje_error = mensaje_error + ' [{}] '.format(e)
+            data['mensaje'] = mensaje_error
+    else:
+        data['respuesta'] = 'error'
+        data['form_respuesta'] = RespuestaPanelForm()
 
     return JsonResponse(data)
 
