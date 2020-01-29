@@ -5,12 +5,11 @@ from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from allauth.account.decorators import verified_email_required
 from django.template.loader import get_template
-
 from apps.reclamo.models import Reclamo, Respuesta
 from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarReclamoPanelForm
 from apps.cliente.models import Cliente
+from apps.cliente.forms import CrearClienteForm
 from apps.reclamo.filters import ReclamoFilter
-
 
 def LogoutView(request):
     logout(request)
@@ -101,7 +100,6 @@ def EnviarReclamoView(request):
 
     return render(request, 'crear-reclamo.html', data)
 
-
 def form_enviar_reclamo_ajax(request):
     """
     Funcion que valida un formulario mediante ajax
@@ -177,7 +175,6 @@ def form_enviar_reclamo_ajax(request):
 
     return JsonResponse(data)
 
-
 def update_reclamo_ajax(request, id):
     data = dict()
 
@@ -219,6 +216,74 @@ def respuesta_reclamo_ajax(request):
         data['form_respuesta'] = RespuestaPanelForm()
 
     return JsonResponse(data)
+
+def ListarClientesView(request):
+    data = dict()
+    form_cliente = CrearClienteForm()
+
+    data['clientes'] = Cliente.objects.all()
+    data['form_cliente'] = form_cliente
+
+    return render(request, 'clientes.html', data)
+
+def crear_cliente_ajax(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form_cliente = CrearClienteForm(request.POST)
+        if form_cliente.is_valid():
+            data['respuesta'] = 'ok'
+            form_cliente.save()
+        else:
+            data['respuesta'] = 'error'
+            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+            for e in form_cliente.errors:
+                mensaje_error = mensaje_error + ' [{}] '.format(e)
+            data['mensaje'] = mensaje_error
+    else:
+        data['respuesta'] = 'error'
+        data['form_cliente'] = CrearClienteForm()
+
+    return JsonResponse(data)
+
+def DetalleClienteView(request, id):
+    data = dict()
+
+    detalle_cliente = Cliente.objects.get(pk=id)
+
+    data['form_cliente'] = CrearClienteForm(instance=detalle_cliente)
+
+    data['pk_cliente'] = id
+    data['detalle_cliente'] = detalle_cliente
+
+    return render(request, 'panel-detalle-cliente.html', data)
+
+def update_cliente_ajax(request, id):
+    data = dict()
+
+    detalle_cliente = Cliente.objects.get(pk=id)
+
+    if request.method == 'POST':
+        form_cliente = CrearClienteForm(request.POST, instance=detalle_cliente)
+        if form_cliente.is_valid():
+            data['respuesta'] = 'ok'
+            form_cliente.save()
+        else:
+            data['respuesta'] = 'error'
+            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+            for e in form_cliente.errors:
+                mensaje_error = mensaje_error + ' [{}] '.format(e)
+            data['mensaje'] = mensaje_error
+    else:
+        data['respuesta'] = 'error'
+        data['form_cliente'] = CrearClienteForm(request.POST, instance=detalle_cliente)
+
+    return JsonResponse(data)
+
+
+
+
+
 
 
 

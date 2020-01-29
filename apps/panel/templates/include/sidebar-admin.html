@@ -18,3 +18,44 @@
 </li>
 
 <hr class="sidebar-divider">
+
+<div class="sidebar-heading">
+    Gestión de clientes
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cliente" aria-expanded="true" aria-controls="cliente">
+        <i class="fas fa-fw fa-user-alt"></i>
+        <span>Clientes</span>
+    </a>
+    <div id="cliente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Clientes</h6>
+            <a class="collapse-item" href="{% url 'panel:listar-cliente' %}">Ver todos los Clientes</a>
+        </div>
+    </div>
+</li>
+
+
+<hr class="sidebar-divider">
+
+<div class="sidebar-heading">
+    Gestión de Web
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#web" aria-expanded="true" aria-controls="web">
+        <i class="fas fa-fw fa-sitemap"></i>
+        <span>Módulos</span>
+    </a>
+    <div id="web" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Módulos</h6>
+             <a class="collapse-item" href="">Servicios</a>
+            <a class="collapse-item" href="">Equipos</a>
+            <a class="collapse-item" href="">Certificaciones</a>
+            <a class="collapse-item" href="">Contactos</a>
+        </div>
+    </div>
+</li>
+

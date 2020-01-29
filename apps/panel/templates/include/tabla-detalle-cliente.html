@@ -1,0 +1,99 @@
+{% load crispy_forms_tags %}
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Detalles del Cliente</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Acciones:</div>
+                        <a data-toggle="modal" data-target="#modal_editar_cliente" class="dropdown-item" href="">Editar cliente</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>Razón Social</td>
+                            <td>{{ detalle_cliente.razon_social }}</td>
+                        </tr>
+                        <tr>
+                            <th>Rut</th>
+                            <td>{{ detalle_cliente.rut }}</td>
+                        </tr>
+                        <tr>
+                            <th>Direccion</th>
+                            {% if detalle_cliente.direccion %}
+                                <td>{{ detalle_cliente.direccion }}</td>
+                            {% else %}
+                                <td>Sin datos</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Fono</th>
+                            {% if detalle_cliente.fono %}
+                                <td>{{ detalle_cliente.fono }}</td>
+                            {% else %}
+                                <td>Sin datos</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Contacto Comercial</th>
+                            {% if detalle_cliente.contacto_comercial %}
+                                <td>{{ detalle_cliente.contacto_comercial }}</td>
+                            {% else %}
+                                <td>Sin datos</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Uusuario Web</th>
+                            <td>{{ detalle_cliente.usuario }}</td>
+                        </tr>
+                        <tr>
+                            <th>Estado</th>
+                            {% if detalle_cliente.activo %}
+                                <td> Si </td>
+                            {% else %}
+                                <td> No </td>
+                            {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- THE MODAL WE WILL BE USING -->
+<div class="modal fade" id="modal_editar_cliente" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Editar Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" method="POST" id="form-edit-cliente" data-url="{% url 'panel:form-update-cliente-ajax' pk_cliente %}"> {% csrf_token %}
+                <div class="modal-body">
+                    {{ form_cliente|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-form-edit-cliente">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

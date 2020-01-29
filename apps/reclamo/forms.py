@@ -22,6 +22,7 @@ class EditarReclamoPanelForm(forms.ModelForm):
 
         widgets = {
             'cliente': forms.HiddenInput(),
+            'texto': forms.Textarea(attrs={'readonly':'readonly'})
         }
 
 class RespuestaPanelForm(forms.ModelForm):
