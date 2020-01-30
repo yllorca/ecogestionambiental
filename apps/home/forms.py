@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contacto, Servcio
+from .models import Contacto, Servcio, Equipo
 
 class ContactoForm(forms.ModelForm):
     class Meta:
@@ -13,3 +13,10 @@ class ServicioForm(forms.ModelForm):
         model = Servcio
         exclude = ('slug',)
         fields = ('nombre', 'categoria', 'descripcion', 'img', 'publicado')
+
+
+class EquipoForm(forms.ModelForm):
+    class Meta:
+        model = Equipo
+        exclude = ('slug',)
+        fields = ('nombre_completo', 'cargo', 'url_twitter', 'url_linkedin', 'img', 'publicado')

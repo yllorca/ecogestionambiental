@@ -10,8 +10,8 @@ from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarRecla
 from apps.cliente.models import Cliente
 from apps.cliente.forms import CrearClienteForm
 from apps.reclamo.filters import ReclamoFilter
-from apps.home.models import Contacto, Servcio
-from apps.home.forms import ServicioForm
+from apps.home.models import Contacto, Servcio, Equipo, Certificacion
+from apps.home.forms import ServicioForm, EquipoForm
 
 def LogoutView(request):
     logout(request)
@@ -313,9 +313,6 @@ def ServiciosEditarView(request, id=None):
     data['detalle_servicio'] = detalle_servicio
     data['form_servicio'] = form_servicio
 
-
-    # data['pk_servicio'] = id
-
     return render(request, 'panel-detalle-servicio.html', data)
 
 def ServicioCrearView(request):
@@ -342,6 +339,62 @@ def ServicioCrearView(request):
 
     return render(request, 'panel-nuevo-servicio.html', data)
 
+def EquipoListView(request):
+    data = dict()
+    data['mi_equipo'] = Equipo.objects.all()
+
+    return render(request, 'equipo.html', data)
+
+def EquipoCreateView(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form_equipo = EquipoForm(request.POST)
+
+        if form_equipo.is_valid():
+            new_equipo = form_equipo.save()
+
+            ## Guardo la foto una vez creado
+            if 'img' in request.FILES:
+                new_equipo.img = request.FILES['img']
+                new_equipo.save()
+
+            return redirect('panel:listar-equipo')
+
+    else:
+        ## Cre un formulario para crear una noticia
+        form_equipo = EquipoForm()
+
+    data['form_equipo'] = form_equipo
+
+    return render(request, 'panel-cerar-equipo.html', data)
+
+def EquipoEditView(request, id=None):
+    data = dict()
+
+    detalle_equipo = Equipo.objects.get(pk=id)
+
+    form_equipo = EquipoForm(request.POST or None, request.FILES or None, instance=detalle_equipo)
+
+    if form_equipo.is_valid():
+        update_equipo = form_equipo.save()
+
+        if 'img' in request.FILES:
+            update_equipo.img = request.FILES['img']
+            update_equipo.save()
+
+        return redirect("panel:listar-equipo")
+
+    data['detalle_equipo'] = detalle_equipo
+    data['form_equipo'] = form_equipo
+
+    return render(request, 'panel-detalle-equipo.html', data)
+#
+# def CertificacionListView(request):
+#
+# def CertificacionCreateView(request):
+#
+# def CertificacioneditView(request):
 
 
 

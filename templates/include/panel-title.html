@@ -23,3 +23,34 @@
     <h1 class="h3 mb-0 text-gray-800">Ingresar una solicitud</h1>
 </div>
 {% endif %}
+
+
+{% if request.path == '/panel/modulo/servcios/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Mis Servicios</h1>
+</div>
+{% endif %}
+
+
+{% if request.path == '/panel/modulo/servicio/nuevo/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nuevo Servicio</h1>
+</div>
+{% endif %}
+
+{% if request.path == '/panel/modulo/equipo/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Mi Equipo</h1>
+</div>
+{% endif %}
+
+
+{% if request.path == '/panel/modulo/equipo/nuevo/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nuevo Integrante</h1>
+</div>
+{% endif %}
+
+
+
+
