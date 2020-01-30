@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView, \
     form_enviar_reclamo_ajax, update_reclamo_ajax, respuesta_reclamo_ajax, ListarClientesView, \
-    DetalleClienteView, crear_cliente_ajax, update_cliente_ajax
+    DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
+    ServiciosPanelView, ServiciosEditarView, ServicioCrearView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -16,5 +17,9 @@ urlpatterns = [
     url(r'^cliente/nuevo/form_ajax/$', crear_cliente_ajax, name='form-nuevo-cliente'),
     url(r'^cliente/editar/form_ajax/(?P<id>\d+)/$', update_cliente_ajax, name='form-update-cliente-ajax'),
 
+    url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
+    url(r'^modulo/servcios/$', ServiciosPanelView, name="listar-servicios"),
+    url(r'^modulo/servicio/(?P<id>\d+)$', ServiciosEditarView, name="detalle-servicio"),
+    url(r'^modulo/servicio/nuevo/$', ServicioCrearView, name="crear-servicio"),
     url(r'^salir/$', LogoutView, name="salir"),
 ]

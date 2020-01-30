@@ -11,6 +11,13 @@
 {% endif %}
 
 
+{% if request.path == '/panel/modulo/contactos/' %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Contactos Web</h1>
+</div>
+{% endif %}
+
+
 {% if request.path == '/panel/reclamos/nuevo/' %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Ingresar una solicitud</h1>

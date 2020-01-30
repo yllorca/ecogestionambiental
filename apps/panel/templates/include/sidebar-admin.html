@@ -51,10 +51,10 @@
     <div id="web" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Módulos</h6>
-             <a class="collapse-item" href="">Servicios</a>
+             <a class="collapse-item" href="{% url 'panel:listar-servicios' %}">Servicios</a>
             <a class="collapse-item" href="">Equipos</a>
             <a class="collapse-item" href="">Certificaciones</a>
-            <a class="collapse-item" href="">Contactos</a>
+            <a class="collapse-item" href="{% url 'panel:listar-contactos' %}">Contactos</a>
         </div>
     </div>
 </li>

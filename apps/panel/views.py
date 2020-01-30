@@ -10,6 +10,8 @@ from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarRecla
 from apps.cliente.models import Cliente
 from apps.cliente.forms import CrearClienteForm
 from apps.reclamo.filters import ReclamoFilter
+from apps.home.models import Contacto, Servcio
+from apps.home.forms import ServicioForm
 
 def LogoutView(request):
     logout(request)
@@ -279,6 +281,66 @@ def update_cliente_ajax(request, id):
         data['form_cliente'] = CrearClienteForm(request.POST, instance=detalle_cliente)
 
     return JsonResponse(data)
+
+def ContactoPanelView(request):
+    data = dict()
+    data['contactos'] = Contacto.objects.all().order_by('-id')
+
+    return render(request, 'panel-contactos.html', data)
+
+def ServiciosPanelView(request):
+    data = dict()
+    data['servicios'] = Servcio.objects.all().order_by('-id')
+
+    return render(request, 'panel-servicios.html', data)
+
+def ServiciosEditarView(request, id=None):
+    data = dict()
+
+    detalle_servicio = Servcio.objects.get(pk=id)
+
+    form_servicio = ServicioForm(request.POST or None, request.FILES or None, instance=detalle_servicio)
+
+    if form_servicio.is_valid():
+        update_servicio = form_servicio.save()
+
+        if 'img' in request.FILES:
+            update_servicio.img = request.FILES['img']
+            update_servicio.save()
+
+        return redirect("panel:listar-servicios")
+
+    data['detalle_servicio'] = detalle_servicio
+    data['form_servicio'] = form_servicio
+
+
+    # data['pk_servicio'] = id
+
+    return render(request, 'panel-detalle-servicio.html', data)
+
+def ServicioCrearView(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form_servicio = ServicioForm(request.POST)
+
+        if form_servicio.is_valid():
+            new_servicio = form_servicio.save()
+
+            ## Guardo la foto una vez creado el servicio, si es que hay foto que agregar
+            if 'img' in request.FILES:
+                new_servicio.img = request.FILES['img']
+                new_servicio.save()
+
+            return redirect('panel:listar-servicios')
+
+    else:
+        ## Cre un formulario para crear una noticia
+        form_servicio = ServicioForm()
+
+    data['form_servicio'] = form_servicio
+
+    return render(request, 'panel-nuevo-servicio.html', data)
 
 
 
