@@ -1,0 +1,74 @@
+{% load crispy_forms_tags %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Mis Certificaciones</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Acciones:</div>
+                        <a class="dropdown-item" href="{% url 'panel:crear-certificacion' %}">Nueva certificación</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="table_datos" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Nombre certificación</th>
+                            <th>Url Ref.</th>
+                            <th class="text-center">Logo</th>
+                            <th class="text-center">Publicado</th>
+                            <th class="text-center">Editar</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Nombre certificación</th>
+                            <th>Url Ref.</th>
+                            <th class="text-center">Logo</th>
+                            <th class="text-center">Publicado</th>
+                            <th class="text-center">Editar</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for i  in mis_certificados %}
+                            <tr>
+                                <td>{{ i.nombre_certificacion }}</td>
+                                <td>{{ i.url_referencia }}</td>
+                                {% if i.img %}
+                                <td>
+                                    <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}" style="width: 250px">
+                                </td>
+                                    {% else %}
+                                    <td>Sin foto</td>
+                                {% endif %}
+                                {% if i.publicado %}
+                                    <td class="text-center"> Si </td>
+                                {% else %}
+                                    <td class="text-center"> No </td>
+                                {% endif %}
+
+                                <td class="text-center">
+                                    <a href="{% url 'panel:editar-certificacion' i.pk %}" target="_blank" class="btn btn-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

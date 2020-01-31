@@ -11,7 +11,7 @@ from apps.cliente.models import Cliente
 from apps.cliente.forms import CrearClienteForm
 from apps.reclamo.filters import ReclamoFilter
 from apps.home.models import Contacto, Servcio, Equipo, Certificacion
-from apps.home.forms import ServicioForm, EquipoForm
+from apps.home.forms import ServicioForm, EquipoForm, CertificadoForm
 
 def LogoutView(request):
     logout(request)
@@ -389,12 +389,57 @@ def EquipoEditView(request, id=None):
     data['form_equipo'] = form_equipo
 
     return render(request, 'panel-detalle-equipo.html', data)
-#
-# def CertificacionListView(request):
-#
-# def CertificacionCreateView(request):
-#
-# def CertificacioneditView(request):
+
+def CertificacionListView(request):
+    data = dict()
+    data['mis_certificados'] = Certificacion.objects.all()
+
+    return render(request, 'certificaciones.html', data)
+
+def CertificacionCreateView(request):
+    data = dict()
+
+    if request.method == 'POST':
+        form_certificado = CertificadoForm(request.POST)
+
+        if form_certificado.is_valid():
+            new_certificado = form_certificado.save()
+
+            ## Guardo la foto una vez creado
+            if 'img' in request.FILES:
+                new_certificado.img = request.FILES['img']
+                new_certificado.save()
+
+            return redirect('panel:listar-certificacion')
+
+    else:
+        ## Cre un formulario para crear una noticia
+        form_certificado = CertificadoForm()
+
+    data['form_certificado'] = form_certificado
+
+    return render(request, 'panel-crear-certificacion.html', data)
+
+def CertificacionEditView(request, id=None):
+    data = dict()
+
+    detalle_certificado = Certificacion.objects.get(pk=id)
+
+    form_certificado = CertificadoForm(request.POST or None, request.FILES or None, instance=detalle_certificado)
+
+    if form_certificado.is_valid():
+        update_certificado = form_certificado.save()
+
+        if 'img' in request.FILES:
+            update_certificado.img = request.FILES['img']
+            update_certificado.save()
+
+        return redirect("panel:listar-certificacion")
+
+    data['detalle_certificado'] = detalle_certificado
+    data['form_certificado'] = form_certificado
+
+    return render(request, 'panel-detalle-certificado.html', data)
 
 
 

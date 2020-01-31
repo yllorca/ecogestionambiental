@@ -14,9 +14,13 @@
                 <div class="owl-carousel clients-carousel" data-carousel-options="{&quot;items&quot;:&quot;3&quot;}">
                     {% for i in certificaciones %}
                         {% if i.img %}
-                            <div class="client"><a href="{{ i.url_referencia }}" target="_blank"><img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}"></a></div>
+                            <div class="client">
+                                <a href="{% if i.url_referencia %} {{ i.url_referencia }} {% else %} # {% endif %}" target="_blank">
+                                    <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}">
+                                </a>
+                            </div>
                         {% else %}
-                            <div class="client">><a href="{{ i.url_referencia }}" target="_blank"><img src="{% static 'assets/images/clients/logo-1.png' %}" alt=""></a></div>
+                            <div class="client"><a href="{% if i.url_referencia %} {{ i.url_referencia }} {% else %} # {% endif %}" target="_blank"><img src="{% static 'assets/images/clients/logo-1.png' %}" alt=""></a></div>
                         {% endif %}
                     {% empty %}
                         <p>Sin info</p>

@@ -2,7 +2,8 @@ from django.conf.urls import url
 from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView, \
     form_enviar_reclamo_ajax, update_reclamo_ajax, respuesta_reclamo_ajax, ListarClientesView, \
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
-    ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, EquipoEditView
+    ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
+    EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -25,6 +26,10 @@ urlpatterns = [
     url(r'^modulo/equipo/$', EquipoListView, name="listar-equipo"),
     url(r'^modulo/equipo/nuevo/$', EquipoCreateView, name="crear-equipo"),
     url(r'^modulo/equipo/(?P<id>\d+)$', EquipoEditView, name="editar-equipo"),
+
+    url(r'^modulo/certificaciones/$', CertificacionListView, name="listar-certificacion"),
+    url(r'^modulo/certificaciones/nuevo/$', CertificacionCreateView, name="crear-certificacion"),
+    url(r'^modulo/certificacion/(?P<id>\d+)$', CertificacionEditView, name="editar-certificacion"),
 
     url(r'^salir/$', LogoutView, name="salir"),
 ]
