@@ -2,7 +2,8 @@
     <table class="table table-bordered" id="table_datos" width="100%" cellspacing="0">
         <thead>
         <tr>
-            <th>Fecha de Ingresos</th>
+            <td>Nº</td>
+            <th>Fecha</th>
             <th>Tipo de solicitud</th>
             <th>Categoria</th>
             <th>Estado</th>
@@ -11,7 +12,8 @@
         </thead>
         <tfoot>
         <tr>
-            <th>Fecha de Ingresos</th>
+             <td>Nº</td>
+            <th>Fecha</th>
             <th>Tipo de solicitud</th>
             <th>Categoria</th>
             <th>Estado</th>
@@ -21,6 +23,7 @@
         <tbody>
         {% for i  in mi_reclamo %}
         <tr>
+            <td>{{ i.pk }}</td>
             <td>{{ i.fecha_ingreso|date:'Y-m-d' }}</td>
             <td>{{ i.get_tipo_solicitud_display }}</td>
             <td>{{ i.get_categoria_display }}</td>

@@ -21,9 +21,9 @@ def LogoutView(request):
 def PanelView(request):
     data = dict()
 
-    data['mi_reclamo'] = Reclamo.objects.filter(cliente__usuario=request.user)
+    data['mi_reclamo'] = Reclamo.objects.filter(cliente__usuario=request.user).order_by('-id')
 
-    reclamos_staff = Reclamo.objects.all().order_by('id')
+    reclamos_staff = Reclamo.objects.all().order_by('-id')
 
     data['reclamos_staff'] = reclamos_staff
 
@@ -77,7 +77,9 @@ def DetalleReclamoView(request, id):
     data['form_reclamo'] = EditarReclamoPanelForm(instance=detalle_reclamo)
 
     data['pk_reclamo'] = id
+
     data['detalle_reclamo'] = detalle_reclamo
+
     data['mi_respuesta'] = Respuesta.objects.filter(reclamo_id=id)
 
     form_respuesta = RespuestaPanelForm()
@@ -125,13 +127,14 @@ def form_enviar_reclamo_ajax(request):
             form.save()
 
             # obtengo la informacion
-            cliente = request.POST['cliente']
             tipo_solicitud = request.POST['tipo_solicitud']
             estado = request.POST['estado']
             categoria = request.POST['categoria']
             texto = request.POST['texto']
 
-            template = get_template('email/detalle-email-reclamo.html')
+            template1 = get_template('email/detalle-email-reclamo.html')
+            template2 = get_template('email/notificacion-reclamo-cliente.html')
+
 
             # buscar el label de la sede
             label_tipo_solicitud = ''
@@ -156,19 +159,33 @@ def form_enviar_reclamo_ajax(request):
                 'estado': label_estado,
                 'categoria': label_categoria,
                 'texto': texto,
+                'email': mi_cliente.usuario.email,
 
             }
-            contenido = template.render(ctx)
 
-            msg = EmailMultiAlternatives(
-                'Contacto Alumni IPVG',
-                contenido,
-                'noresponder@virginiogomez.cl',
+            contenido1 = template1.render(ctx)
+            contenido2 = template2.render(ctx)
+
+            msg1 = EmailMultiAlternatives(
+                'Nuevo Reclamo/Sugerencia',
+                contenido1,
+                'noresponder@ecogestionambiental.cl',
                 ['yllorca@helloworld.cl'],
             )
-            msg.attach_alternative(contenido, "text/html")
+            msg1.attach_alternative(contenido1, "text/html")
 
-            msg.send()
+            msg1.send()
+
+            msg2 = EmailMultiAlternatives(
+                'Nuevo Reclamo/Sugerencia',
+                contenido2,
+                'noresponder@ecogestionambiental.cl',
+                [mi_cliente.usuario.email],
+            )
+            msg2.attach_alternative(contenido2, "text/html")
+
+            msg2.send()
+
         else:
             data['respuesta'] = 'error'
             mensaje_error = '<strong>Campos requeridos:</strong> <br>'
@@ -207,11 +224,35 @@ def update_reclamo_ajax(request, id):
 def respuesta_reclamo_ajax(request):
     data = dict()
 
+    # respuesta = Respuesta.objects.get(reclamo_id=id)
+
     if request.method == 'POST':
         form_respuesta = RespuestaPanelForm(request.POST)
         if form_respuesta.is_valid():
             data['respuesta'] = 'ok'
             form_respuesta.save()
+
+            # # obtengo la informacion
+            # template1 = get_template('email/respuesta-reclamo.html')
+            #
+            # ctx = {
+            #     'detalle_respuesta': respuesta.detalle_respuesta,
+            #     'fecha_respuesta': respuesta.fecha_respuesta,
+            # }
+            #
+            # contenido1 = template1.render(ctx)
+            #
+            # msg1 = EmailMultiAlternatives(
+            #     'Respuesta a requerimento',
+            #     contenido1,
+            #     'noresponder@ecogestionambiental.cl',
+            #     ['respuesta.reclamo.cliente.usuario.email'],
+            # )
+            # msg1.attach_alternative(contenido1, "text/html")
+            #
+            # msg1.send()
+
+
         else:
             data['respuesta'] = 'error'
             mensaje_error = '<strong>Campos requeridos:</strong> <br>'
