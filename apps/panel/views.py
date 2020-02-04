@@ -68,6 +68,7 @@ def PanelView(request):
 
     return render(request, 'panel.html', data)
 
+@verified_email_required
 def DetalleReclamoView(request, id):
     data = dict()
 
@@ -87,6 +88,7 @@ def DetalleReclamoView(request, id):
 
     return render(request, 'panel-detalle-reclamo.html', data)
 
+@verified_email_required
 def EnviarReclamoView(request):
 
     data = dict()
@@ -102,6 +104,7 @@ def EnviarReclamoView(request):
 
     return render(request, 'crear-reclamo.html', data)
 
+@verified_email_required
 def form_enviar_reclamo_ajax(request):
     """
     Funcion que valida un formulario mediante ajax
@@ -177,6 +180,7 @@ def form_enviar_reclamo_ajax(request):
 
     return JsonResponse(data)
 
+@verified_email_required
 def update_reclamo_ajax(request, id):
     data = dict()
 
@@ -199,6 +203,7 @@ def update_reclamo_ajax(request, id):
 
     return JsonResponse(data)
 
+@verified_email_required
 def respuesta_reclamo_ajax(request):
     data = dict()
 
@@ -219,227 +224,270 @@ def respuesta_reclamo_ajax(request):
 
     return JsonResponse(data)
 
+@verified_email_required
 def ListarClientesView(request):
-    data = dict()
-    form_cliente = CrearClienteForm()
+    if request.user.is_staff:
+        data = dict()
+        form_cliente = CrearClienteForm()
 
-    data['clientes'] = Cliente.objects.all()
-    data['form_cliente'] = form_cliente
+        data['clientes'] = Cliente.objects.all()
+        data['form_cliente'] = form_cliente
 
-    return render(request, 'clientes.html', data)
+        return render(request, 'clientes.html', data)
+    raise Http404
 
+@verified_email_required
 def crear_cliente_ajax(request):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    if request.method == 'POST':
-        form_cliente = CrearClienteForm(request.POST)
-        if form_cliente.is_valid():
-            data['respuesta'] = 'ok'
-            form_cliente.save()
+        if request.method == 'POST':
+            form_cliente = CrearClienteForm(request.POST)
+            if form_cliente.is_valid():
+                data['respuesta'] = 'ok'
+                form_cliente.save()
+            else:
+                data['respuesta'] = 'error'
+                mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+                for e in form_cliente.errors:
+                    mensaje_error = mensaje_error + ' [{}] '.format(e)
+                data['mensaje'] = mensaje_error
         else:
             data['respuesta'] = 'error'
-            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
-            for e in form_cliente.errors:
-                mensaje_error = mensaje_error + ' [{}] '.format(e)
-            data['mensaje'] = mensaje_error
-    else:
-        data['respuesta'] = 'error'
-        data['form_cliente'] = CrearClienteForm()
+            data['form_cliente'] = CrearClienteForm()
 
-    return JsonResponse(data)
+        return JsonResponse(data)
+    raise Http404
 
+@verified_email_required
 def DetalleClienteView(request, id):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    detalle_cliente = Cliente.objects.get(pk=id)
+        detalle_cliente = Cliente.objects.get(pk=id)
 
-    data['form_cliente'] = CrearClienteForm(instance=detalle_cliente)
+        data['form_cliente'] = CrearClienteForm(instance=detalle_cliente)
 
-    data['pk_cliente'] = id
-    data['detalle_cliente'] = detalle_cliente
+        data['pk_cliente'] = id
+        data['detalle_cliente'] = detalle_cliente
 
-    return render(request, 'panel-detalle-cliente.html', data)
+        return render(request, 'panel-detalle-cliente.html', data)
+    raise Http404
 
+@verified_email_required
 def update_cliente_ajax(request, id):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    detalle_cliente = Cliente.objects.get(pk=id)
+        detalle_cliente = Cliente.objects.get(pk=id)
 
-    if request.method == 'POST':
-        form_cliente = CrearClienteForm(request.POST, instance=detalle_cliente)
-        if form_cliente.is_valid():
-            data['respuesta'] = 'ok'
-            form_cliente.save()
+        if request.method == 'POST':
+            form_cliente = CrearClienteForm(request.POST, instance=detalle_cliente)
+            if form_cliente.is_valid():
+                data['respuesta'] = 'ok'
+                form_cliente.save()
+            else:
+                data['respuesta'] = 'error'
+                mensaje_error = '<strong>Campos requeridos:</strong> <br>'
+                for e in form_cliente.errors:
+                    mensaje_error = mensaje_error + ' [{}] '.format(e)
+                data['mensaje'] = mensaje_error
         else:
             data['respuesta'] = 'error'
-            mensaje_error = '<strong>Campos requeridos:</strong> <br>'
-            for e in form_cliente.errors:
-                mensaje_error = mensaje_error + ' [{}] '.format(e)
-            data['mensaje'] = mensaje_error
-    else:
-        data['respuesta'] = 'error'
-        data['form_cliente'] = CrearClienteForm(request.POST, instance=detalle_cliente)
+            data['form_cliente'] = CrearClienteForm(request.POST, instance=detalle_cliente)
 
-    return JsonResponse(data)
+        return JsonResponse(data)
+    raise Http404
 
+@verified_email_required
 def ContactoPanelView(request):
-    data = dict()
-    data['contactos'] = Contacto.objects.all().order_by('-id')
+    if request.user.is_staff:
 
-    return render(request, 'panel-contactos.html', data)
+        data = dict()
+        data['contactos'] = Contacto.objects.all().order_by('-id')
 
+        return render(request, 'panel-contactos.html', data)
+    raise Http404
+
+@verified_email_required
 def ServiciosPanelView(request):
-    data = dict()
-    data['servicios'] = Servcio.objects.all().order_by('-id')
+    if request.user.is_staff:
+        data = dict()
+        data['servicios'] = Servcio.objects.all().order_by('-id')
 
-    return render(request, 'panel-servicios.html', data)
+        return render(request, 'panel-servicios.html', data)
+    raise Http404
 
+@verified_email_required
 def ServiciosEditarView(request, id=None):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    detalle_servicio = Servcio.objects.get(pk=id)
+        detalle_servicio = Servcio.objects.get(pk=id)
 
-    form_servicio = ServicioForm(request.POST or None, request.FILES or None, instance=detalle_servicio)
-
-    if form_servicio.is_valid():
-        update_servicio = form_servicio.save()
-
-        if 'img' in request.FILES:
-            update_servicio.img = request.FILES['img']
-            update_servicio.save()
-
-        return redirect("panel:listar-servicios")
-
-    data['detalle_servicio'] = detalle_servicio
-    data['form_servicio'] = form_servicio
-
-    return render(request, 'panel-detalle-servicio.html', data)
-
-def ServicioCrearView(request):
-    data = dict()
-
-    if request.method == 'POST':
-        form_servicio = ServicioForm(request.POST)
+        form_servicio = ServicioForm(request.POST or None, request.FILES or None, instance=detalle_servicio)
 
         if form_servicio.is_valid():
-            new_servicio = form_servicio.save()
+            update_servicio = form_servicio.save()
 
-            ## Guardo la foto una vez creado el servicio, si es que hay foto que agregar
             if 'img' in request.FILES:
-                new_servicio.img = request.FILES['img']
-                new_servicio.save()
+                update_servicio.img = request.FILES['img']
+                update_servicio.save()
 
-            return redirect('panel:listar-servicios')
+            return redirect("panel:listar-servicios")
 
-    else:
-        ## Cre un formulario para crear una noticia
-        form_servicio = ServicioForm()
+        data['detalle_servicio'] = detalle_servicio
+        data['form_servicio'] = form_servicio
 
-    data['form_servicio'] = form_servicio
+        return render(request, 'panel-detalle-servicio.html', data)
+    raise Http404
 
-    return render(request, 'panel-nuevo-servicio.html', data)
+@verified_email_required
+def ServicioCrearView(request):
+    if request.user.is_staff:
+        data = dict()
 
+        if request.method == 'POST':
+            form_servicio = ServicioForm(request.POST)
+
+            if form_servicio.is_valid():
+                new_servicio = form_servicio.save()
+
+                ## Guardo la foto una vez creado el servicio, si es que hay foto que agregar
+                if 'img' in request.FILES:
+                    new_servicio.img = request.FILES['img']
+                    new_servicio.save()
+
+                return redirect('panel:listar-servicios')
+
+        else:
+            ## Cre un formulario para crear una noticia
+            form_servicio = ServicioForm()
+
+        data['form_servicio'] = form_servicio
+
+        return render(request, 'panel-nuevo-servicio.html', data)
+    raise Http404
+
+@verified_email_required
 def EquipoListView(request):
-    data = dict()
-    data['mi_equipo'] = Equipo.objects.all()
+    if request.user.is_staff:
+        data = dict()
+        data['mi_equipo'] = Equipo.objects.all()
 
-    return render(request, 'equipo.html', data)
+        return render(request, 'equipo.html', data)
+    raise Http404
 
+@verified_email_required
 def EquipoCreateView(request):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    if request.method == 'POST':
-        form_equipo = EquipoForm(request.POST)
+        if request.method == 'POST':
+            form_equipo = EquipoForm(request.POST)
+
+            if form_equipo.is_valid():
+                new_equipo = form_equipo.save()
+
+                ## Guardo la foto una vez creado
+                if 'img' in request.FILES:
+                    new_equipo.img = request.FILES['img']
+                    new_equipo.save()
+
+                return redirect('panel:listar-equipo')
+
+        else:
+            ## Cre un formulario para crear una noticia
+            form_equipo = EquipoForm()
+
+        data['form_equipo'] = form_equipo
+
+        return render(request, 'panel-cerar-equipo.html', data)
+    raise Http404
+
+@verified_email_required
+def EquipoEditView(request, id=None):
+    if request.user.is_staff:
+        data = dict()
+
+        detalle_equipo = Equipo.objects.get(pk=id)
+
+        form_equipo = EquipoForm(request.POST or None, request.FILES or None, instance=detalle_equipo)
 
         if form_equipo.is_valid():
-            new_equipo = form_equipo.save()
+            update_equipo = form_equipo.save()
 
-            ## Guardo la foto una vez creado
             if 'img' in request.FILES:
-                new_equipo.img = request.FILES['img']
-                new_equipo.save()
+                update_equipo.img = request.FILES['img']
+                update_equipo.save()
 
-            return redirect('panel:listar-equipo')
+            return redirect("panel:listar-equipo")
 
-    else:
-        ## Cre un formulario para crear una noticia
-        form_equipo = EquipoForm()
+        data['detalle_equipo'] = detalle_equipo
+        data['form_equipo'] = form_equipo
 
-    data['form_equipo'] = form_equipo
+        return render(request, 'panel-detalle-equipo.html', data)
+    raise Http404
 
-    return render(request, 'panel-cerar-equipo.html', data)
-
-def EquipoEditView(request, id=None):
-    data = dict()
-
-    detalle_equipo = Equipo.objects.get(pk=id)
-
-    form_equipo = EquipoForm(request.POST or None, request.FILES or None, instance=detalle_equipo)
-
-    if form_equipo.is_valid():
-        update_equipo = form_equipo.save()
-
-        if 'img' in request.FILES:
-            update_equipo.img = request.FILES['img']
-            update_equipo.save()
-
-        return redirect("panel:listar-equipo")
-
-    data['detalle_equipo'] = detalle_equipo
-    data['form_equipo'] = form_equipo
-
-    return render(request, 'panel-detalle-equipo.html', data)
-
+@verified_email_required
 def CertificacionListView(request):
-    data = dict()
-    data['mis_certificados'] = Certificacion.objects.all()
+    if request.user.is_staff:
+        data = dict()
+        data['mis_certificados'] = Certificacion.objects.all()
 
-    return render(request, 'certificaciones.html', data)
+        return render(request, 'certificaciones.html', data)
+    raise Http404
 
+@verified_email_required
 def CertificacionCreateView(request):
-    data = dict()
+    if request.user.is_staff:
+        data = dict()
 
-    if request.method == 'POST':
-        form_certificado = CertificadoForm(request.POST)
+        if request.method == 'POST':
+            form_certificado = CertificadoForm(request.POST)
+
+            if form_certificado.is_valid():
+                new_certificado = form_certificado.save()
+
+                ## Guardo la foto una vez creado
+                if 'img' in request.FILES:
+                    new_certificado.img = request.FILES['img']
+                    new_certificado.save()
+
+                return redirect('panel:listar-certificacion')
+
+        else:
+            ## Cre un formulario para crear una noticia
+            form_certificado = CertificadoForm()
+
+        data['form_certificado'] = form_certificado
+
+        return render(request, 'panel-crear-certificacion.html', data)
+    raise Http404
+
+@verified_email_required
+def CertificacionEditView(request, id=None):
+    if request.user.is_staff:
+        data = dict()
+
+        detalle_certificado = Certificacion.objects.get(pk=id)
+
+        form_certificado = CertificadoForm(request.POST or None, request.FILES or None, instance=detalle_certificado)
 
         if form_certificado.is_valid():
-            new_certificado = form_certificado.save()
+            update_certificado = form_certificado.save()
 
-            ## Guardo la foto una vez creado
             if 'img' in request.FILES:
-                new_certificado.img = request.FILES['img']
-                new_certificado.save()
+                update_certificado.img = request.FILES['img']
+                update_certificado.save()
 
-            return redirect('panel:listar-certificacion')
+            return redirect("panel:listar-certificacion")
 
-    else:
-        ## Cre un formulario para crear una noticia
-        form_certificado = CertificadoForm()
+        data['detalle_certificado'] = detalle_certificado
+        data['form_certificado'] = form_certificado
 
-    data['form_certificado'] = form_certificado
-
-    return render(request, 'panel-crear-certificacion.html', data)
-
-def CertificacionEditView(request, id=None):
-    data = dict()
-
-    detalle_certificado = Certificacion.objects.get(pk=id)
-
-    form_certificado = CertificadoForm(request.POST or None, request.FILES or None, instance=detalle_certificado)
-
-    if form_certificado.is_valid():
-        update_certificado = form_certificado.save()
-
-        if 'img' in request.FILES:
-            update_certificado.img = request.FILES['img']
-            update_certificado.save()
-
-        return redirect("panel:listar-certificacion")
-
-    data['detalle_certificado'] = detalle_certificado
-    data['form_certificado'] = form_certificado
-
-    return render(request, 'panel-detalle-certificado.html', data)
+        return render(request, 'panel-detalle-certificado.html', data)
+    raise Http404
 
 
 
