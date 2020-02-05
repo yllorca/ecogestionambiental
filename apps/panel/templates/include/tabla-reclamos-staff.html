@@ -1,0 +1,40 @@
+<div class="table-responsive">
+    <table class="table table-bordered" id="table_datos" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Fecha de Ingresos</th>
+            <th>Tipo de solicitud</th>
+            <th>Categoria</th>
+            <th>Estado</th>
+            <th>Cliente</th>
+             <th class="text-center">Detalles</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Fecha de Ingresos</th>
+            <th>Tipo de solicitud</th>
+            <th>Categoria</th>
+            <th>Estado</th>
+            <th>Cliente</th>
+            <th class="text-center">Detalles</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        {% for i  in filter.qs %}
+        <tr>
+            <td>{{ i.fecha_ingreso|date:'Y-m-d' }}</td>
+            <td>{{ i.get_tipo_solicitud_display }}</td>
+            <td>{{ i.get_categoria_display }}</td>
+            <td>{{ i.get_estado_display }}</td>
+            <td>{{ i.cliente }}</td>
+            <td class="text-center">
+                <a href="{% url 'panel:detalle-reclamo' i.pk %}" class="btn btn-info">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

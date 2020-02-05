@@ -39,8 +39,22 @@ class Cliente(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     activo = models.BooleanField(default=True)
 
+
+    def save(self, *args, **kwargs):
+        ##Formateo el nombre
+        self.razon_social = self.razon_social.title()
+
+        # Formateo el rut
+        old_rut = self.rut
+        new_rut = old_rut.replace('.', '').replace('-', '')
+        self.rut = new_rut
+
+        super(Cliente, self).save(*args, **kwargs)
+
+
     def __str__(self):
         return self.razon_social
+
 
     class Meta:
         verbose_name = 'Cliente'

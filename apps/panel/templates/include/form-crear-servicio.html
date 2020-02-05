@@ -1,0 +1,41 @@
+{% load widget_tweaks %}
+
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Nuevo Servicio</h6>
+
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form method="POST" action='' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% render_field  form_servicio.nombre.label %}
+                        {% render_field  form_servicio.nombre class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_servicio.categoria.label %}
+                        {% render_field  form_servicio.categoria class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_servicio.descripcion.label %}
+                        {% render_field  form_servicio.descripcion class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_servicio.img.label %}
+                        {% render_field  form_servicio.img class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_servicio.publicado.label %}
+                        {% render_field  form_servicio.publicado class="form-control" %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

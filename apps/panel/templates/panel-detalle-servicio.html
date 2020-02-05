@@ -1,0 +1,25 @@
+{% extends 'base-dashboard.html' %}
+{% load staticfiles %}
+
+{% block sidebar %}
+    {% include 'include/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block panel-title %}
+    {% include 'include/panel-title.html' %}
+{% endblock panel-title %}
+
+{% block nav %}
+    {% include 'include/nav.html' %}
+{% endblock nav %}
+
+{% block content %}
+    {% include 'include/form-editar-servicio.html' %}
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/footer-panel.html' %}
+{% endblock footer %}
+
+{% block custom-js %}
+{% endblock custom-js %}
