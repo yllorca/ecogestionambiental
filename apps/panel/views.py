@@ -74,21 +74,25 @@ def DetalleReclamoView(request, id):
 
     detalle_reclamo = Reclamo.objects.get(pk=id)
 
-    data['form_reclamo'] = EditarReclamoPanelForm(instance=detalle_reclamo)
+    if request.user.id == detalle_reclamo.cliente.usuario.id or request.user.is_staff:
 
-    data['pk_reclamo'] = id
+        data['form_reclamo'] = EditarReclamoPanelForm(instance=detalle_reclamo)
 
-    data['detalle_reclamo'] = detalle_reclamo
+        data['pk_reclamo'] = id
 
-    data['mi_respuesta'] = Respuesta.objects.filter(reclamo_id=id)
+        data['detalle_reclamo'] = detalle_reclamo
 
-    form_respuesta = RespuestaPanelForm()
-    form_respuesta.fields['reclamo'].initial = id
-    form_respuesta.fields['usuario_interno'].initial = request.user
+        data['mi_respuesta'] = Respuesta.objects.filter(reclamo_id=id)
 
-    data['form_respuesta'] = form_respuesta
+        form_respuesta = RespuestaPanelForm()
+        form_respuesta.fields['reclamo'].initial = id
+        form_respuesta.fields['usuario_interno'].initial = request.user
 
-    return render(request, 'panel-detalle-reclamo.html', data)
+        data['form_respuesta'] = form_respuesta
+
+        return render(request, 'panel-detalle-reclamo.html', data)
+    else:
+        raise Http404
 
 @verified_email_required
 def EnviarReclamoView(request):
@@ -230,27 +234,37 @@ def respuesta_reclamo_ajax(request):
         form_respuesta = RespuestaPanelForm(request.POST)
         if form_respuesta.is_valid():
             data['respuesta'] = 'ok'
-            form_respuesta.save()
+            respuesta_new = form_respuesta.save()
 
-            # # obtengo la informacion
-            # template1 = get_template('email/respuesta-reclamo.html')
-            #
-            # ctx = {
-            #     'detalle_respuesta': respuesta.detalle_respuesta,
-            #     'fecha_respuesta': respuesta.fecha_respuesta,
-            # }
-            #
-            # contenido1 = template1.render(ctx)
-            #
-            # msg1 = EmailMultiAlternatives(
-            #     'Respuesta a requerimento',
-            #     contenido1,
-            #     'noresponder@ecogestionambiental.cl',
-            #     ['respuesta.reclamo.cliente.usuario.email'],
-            # )
-            # msg1.attach_alternative(contenido1, "text/html")
-            #
-            # msg1.send()
+            # obtengo la informacion
+            template1 = get_template('email/respuesta-reclamo.html')
+
+            # buscar el label de la tipo_discapacidad
+
+            label_estado = ''
+            for x in Reclamo.ESTADO:
+                if x[0] == respuesta_new.reclamo.estado:
+                    label_estado = x[1]
+
+            ctx = {
+                'detalle_respuesta': respuesta_new.detalle_respuesta,
+                'fecha_respuesta': respuesta_new.fecha_respuesta,
+                'reclamo_id': respuesta_new.reclamo.pk,
+                'reclamo_estado': label_estado,
+                'cliente': respuesta_new.reclamo.cliente.razon_social
+            }
+
+            contenido1 = template1.render(ctx)
+
+            msg1 = EmailMultiAlternatives(
+                'Respuesta a requerimento',
+                contenido1,
+                'noresponder@ecogestionambiental.cl',
+                [respuesta_new.reclamo.cliente.usuario.email],
+            )
+            msg1.attach_alternative(contenido1, "text/html")
+
+            msg1.send()
 
 
         else:
