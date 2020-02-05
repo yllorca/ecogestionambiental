@@ -1,0 +1,90 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Core - Template</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'assets/images/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'assets/images/apple-touch-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'assets/images/apple-touch-icon-114x114.png' %}">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Hind:400,700%7cLora:400i%7cPoppins:500,600,700" rel="stylesheet">
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Plugins and Icon Fonts-->
+    <link href="{% static 'assets/css/plugins.min.css' %}" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="{% static 'assets/css/template.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Layout-->
+<div class="layout">
+
+    <!-- Header-->
+    {% block header %}
+    {% endblock header %}
+    <!-- Header end-->
+
+    <!-- Wrapper-->
+    <div class="wrapper">
+
+        <!-- Page Header-->
+        {% block page-header %}
+        {% endblock page-header %}
+        <!-- Page Header end-->
+
+        <!-- Nosotros-->
+        {% block nosotros %}
+        {% endblock nosotros %}
+        <!-- Services end-->
+
+        {% block servicios %}
+        {% endblock servicios %}
+
+        <!-- Team-->
+        {% block equipo %}
+        {% endblock equipo %}
+        <!-- Team end-->
+
+        <!-- certificaciones-->
+        {% block certificaciones %}
+        {% endblock certificaciones %}
+        <!-- certificaciones-->
+
+        {% block contacto %}
+        {% endblock contacto %}
+
+        <!-- Footer-->
+        {% block footer %}
+        {% endblock footer %}
+        <!-- Footer end-->
+
+        <a class="scroll-top" href="#top"><i class="fa fa-angle-up"></i></a>
+    </div>
+    <!-- Wrapper end-->
+</div>
+<!-- Layout end-->
+
+
+
+<!-- Scripts-->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+<script src="{% static 'assets/js/plugins.min.js' %}"></script>
+<script src="{% static 'assets/js/charts.js' %}"></script>
+<script src="{% static 'assets/js/custom.min.js' %}"></script>
+
+{% block custom-js %}
+{% endblock custom-js %}
+
+</body>
+</html>
