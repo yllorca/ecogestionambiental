@@ -174,7 +174,7 @@ def form_enviar_reclamo_ajax(request):
                 'Nuevo Reclamo/Sugerencia',
                 contenido1,
                 'noresponder@ecogestionambiental.cl',
-                ['yllorca@helloworld.cl'],
+                ['jmoscoso@ecogestionambiental.cl', 'aaguilera@ecogestionambiental.cl'],
             )
             msg1.attach_alternative(contenido1, "text/html")
 
