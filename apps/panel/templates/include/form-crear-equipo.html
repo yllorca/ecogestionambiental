@@ -1,0 +1,45 @@
+{% load widget_tweaks %}
+
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Nuevo Integrante</h6>
+
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form method="POST" action='' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% render_field  form_equipo.nombre_completo.label %}
+                        {% render_field  form_equipo.nombre_completo class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                         {% render_field  form_equipo.cargo.label %}
+                        {% render_field  form_equipo.cargo class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                          {% render_field  form_equipo.url_twitter.label %}
+                        {% render_field  form_equipo.url_twitter class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                          {% render_field  form_equipo.url_linkedin.label %}
+                        {% render_field  form_equipo.url_linkedin class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_equipo.img.label %}
+                        {% render_field  form_equipo.img class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_equipo.publicado.label %}
+                        {% render_field  form_equipo.publicado class="form-control" %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,14 @@
     <table class="table table-striped">
         <tbody>
         <tr>
+            <td>Nº</td>
+            <td>{{ detalle_reclamo.pk }}</td>
+        </tr>
+        <tr>
+            <td>Cliente</td>
+            <td>{{ detalle_reclamo.cliente.razon_social }}</td>
+        </tr>
+        <tr>
             <th>Estado</th>
             <td>{{ detalle_reclamo.get_estado_display }}</td>
         </tr>

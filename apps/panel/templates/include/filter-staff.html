@@ -1,0 +1,25 @@
+{% load widget_tweaks %}
+<form method="get" id="form_filtros">
+    {#    {{ filter.form }}#}
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {{ filter.form.tipo_solicitud.label_tag }}
+            {% render_field filter.form.tipo_solicitud class="form-control" %}
+        </div>
+        <div class="form-group col-md-6">
+            {{ filter.form.categoria.label_tag }}
+            {% render_field filter.form.categoria class="form-control" %}
+        </div>
+        <div class="form-group col-md-6">
+            {{ filter.form.cliente.label_tag }}
+            {% render_field filter.form.cliente class="form-control" %}
+        </div>
+        <div class="form-group col-md-6">
+            {{ filter.form.estado.label_tag }}
+            {% render_field filter.form.estado class="form-control" %}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="filtrar_datos" value="filtrar_datos"><i class="fa fa-filter"> </i> Filtrar</button>
+    <button type="submit" class="btn btn-success" id="exportar_datos" value="exportar_datos"><i class="fa fa-file-excel"> </i> Exportar selección</button>
+    <input type="hidden" id="accion_requerida" name="accion_requerida" value="">
+</form>
