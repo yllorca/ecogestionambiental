@@ -67,7 +67,7 @@ def form_contacto_ajax(request):
                 'Contacto Web',
                 contenido,
                 'noresponder@ecogestionambiental.cl',
-                ['jmoscoso@ecogestionambiental.cl', 'aaguilera@ecogestionambiental.cl'],
+                ['jmoscoso@ecogestionambiental.cl'],
             )
             msg.attach_alternative(contenido, "text/html")
 
