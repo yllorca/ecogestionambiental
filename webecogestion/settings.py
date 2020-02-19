@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wj0-q&+#c+&r*m&@z8@eeip##iip5#087&ux1(a)ue30(28@gn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['167.172.128.242', '127.0.0.1', 'ecogestionambiental.cl', 'www.ecogestionambiental.cl']
 
@@ -176,3 +176,5 @@ STATICFILES_DIRS = [
     # '/var/www/static/',
 ]
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
