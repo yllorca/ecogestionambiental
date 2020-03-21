@@ -43,10 +43,10 @@
                                 <td>{{ i.nombre_completo }}</td>
                                 <td>{{ i.cargo }}</td>
                                 {% if i.img %}
-                                <td>
-                                    <img src="{{ i.img.url }}" alt="{{ i.nombre_completo }}" style="width: 250px">
-                                </td>
-                                    {% else %}
+                                    <td>
+                                        <img src="{{ i.img.url }}" alt="{{ i.nombre_completo }}" style="width: 250px">
+                                    </td>
+                                {% else %}
                                     <td>Sin foto</td>
                                 {% endif %}
                                 {% if i.publicado %}

@@ -368,7 +368,22 @@ def ContactoPanelView(request):
 def ServiciosPanelView(request):
     if request.user.is_staff:
         data = dict()
+
         data['servicios'] = Servcio.objects.all().order_by('-id')
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'El servicio fue editado con éxito.'
+            del request.session['editado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'El servicio fue creado con éxito'
+            del request.session['creado']
+
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'El servicio fue eliminado con éxito'
+            del request.session['eliminado']
 
         return render(request, 'panel-servicios.html', data)
     raise Http404
@@ -389,12 +404,25 @@ def ServiciosEditarView(request, id=None):
                 update_servicio.img = request.FILES['img']
                 update_servicio.save()
 
+            # variable de session usada para notificar que salio todo bien
+            request.session['editado'] = True
+
             return redirect("panel:listar-servicios")
 
         data['detalle_servicio'] = detalle_servicio
         data['form_servicio'] = form_servicio
 
         return render(request, 'panel-detalle-servicio.html', data)
+    raise Http404
+
+@verified_email_required
+def ServiciosDeleteView(request, id):
+    if request.user.is_staff:
+        servicio = get_object_or_404(Servcio, pk=id)
+        servicio.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-servicios")
     raise Http404
 
 @verified_email_required
@@ -413,7 +441,16 @@ def ServicioCrearView(request):
                     new_servicio.img = request.FILES['img']
                     new_servicio.save()
 
+                # variable de session usada para notificar que salio todo bien
+                request.session['creado'] = True
+
                 return redirect('panel:listar-servicios')
+
+            else:
+                mensaje_error = '<strong>Campos requeridos:</strong> <br><ul>'
+                for e in form_servicio.errors:
+                    mensaje_error = '{}<li>{}</li>'.format(mensaje_error, e)
+                data['mensaje'] = '{}{}'.format(mensaje_error, '</ul>')
 
         else:
             ## Cre un formulario para crear una noticia

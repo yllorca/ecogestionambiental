@@ -41,7 +41,7 @@
                         {% for i  in mis_certificados %}
                             <tr>
                                 <td>{{ i.nombre_certificacion }}</td>
-                                <td>{{ i.url_referencia }}</td>
+                                <td>{{ i.pdf_file.url }}</td>
                                 {% if i.img %}
                                 <td>
                                     <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}" style="width: 250px">

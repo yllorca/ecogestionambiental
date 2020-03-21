@@ -16,8 +16,8 @@
                     <li><a class="current" href="#" data-filter="*">All</a></li>
                     <li><a href="#" data-filter=".vigilancia">vigilancia</a></li>
                     <li><a href="#" data-filter=".estudios">estudios</a></li>
-                     <li><a href="#" data-filter=".monitoreos">monitoreos</a></li>
-                      <li><a href="#" data-filter=".laboratorio">laboratorio</a></li>
+                    <li><a href="#" data-filter=".monitoreos">monitoreos</a></li>
+                    <li><a href="#" data-filter=".laboratorio">laboratorio</a></li>
                 </ul>
             </div>
         </div>
@@ -27,11 +27,13 @@
             {% for i in servicios %}
                 <div class="portfolio-item {{ i.get_categoria_display }} ">
                     <div class="portfolio-wrapper">
-                        <img src="{{ i.img.url }}" alt="{{ i.nombre }}">
-                        <div class="portfolio-overlay"></div>
-                        <div class="portfolio-caption">
-                            <h5 class="portfolio-title">{{ i.nombre }}</h5>
-                        </div><a class="portfolio-link" href="/servicio/{{ i.slug }}"></a>
+                        {% if i.img %}
+                            <img src="{{ i.img.url }}" alt="{{ i.nombre }}">
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h5 class="portfolio-title">{{ i.nombre }}</h5>
+                            </div><a class="portfolio-link" href="/servicio/{{ i.slug }}"></a>
+                        {% endif %}
                     </div>
                 </div>
             {% empty %}

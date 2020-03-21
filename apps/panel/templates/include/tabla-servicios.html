@@ -1,5 +1,42 @@
 <div class="row">
     <div class="col-xl-12 col-lg-12">
+        {% if creado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ creado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Mensaje para indicar que se ha editado con exito el convenio-->
+        {% if editado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ editado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if eliminado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ eliminado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -11,6 +48,7 @@
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Acciones:</div>
                         <a href="{% url 'panel:crear-servicio' %}" class="dropdown-item">Nuevo Servicio</a>
+                        <a href="{% url 'home:home' %}#servicios" class="dropdown-item">Ir a la Sección</a>
                     </div>
                 </div>
             </div>
@@ -26,6 +64,7 @@
                             <td>Publicado</td>
                             <th>Ver</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -36,6 +75,7 @@
                             <td>Publicado</td>
                             <th>Ver</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -45,9 +85,9 @@
                                 <td>{{ i.get_categoria_display }}</td>
                                 <td>{{ i.descripcion|safe }}</td>
                                 {% if i.publicado  %}
-                                    <td>Si</td>
+                                    <td class="text-center">Si</td>
                                 {% else %}
-                                    <td>No</td>
+                                    <td class="text-center">No</td>
                                 {% endif %}
                                 <td class="text-center">
                                     <a target="_blank" class="btn btn-warning" href="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/servicio/{{ i.slug }}"><i class="fas fa-eye"></i></a>
@@ -56,6 +96,12 @@
                                 <td class="text-center">
                                     <a href="{% url 'panel:detalle-servicio' i.pk %}" class="btn btn-info">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="{% url 'panel:eliminar-servicio' i.pk %}" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
 

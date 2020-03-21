@@ -3,7 +3,7 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     form_enviar_reclamo_ajax, update_reclamo_ajax, respuesta_reclamo_ajax, ListarClientesView, \
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
-    EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView
+    EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
     url(r'^modulo/servcios/$', ServiciosPanelView, name="listar-servicios"),
     url(r'^modulo/servicio/(?P<id>\d+)$', ServiciosEditarView, name="detalle-servicio"),
+    url(r'^modulo/servicio/eliminar/(?P<id>\d+)$', ServiciosDeleteView, name="eliminar-servicio"),
     url(r'^modulo/servicio/nuevo/$', ServicioCrearView, name="crear-servicio"),
 
     url(r'^modulo/equipo/$', EquipoListView, name="listar-equipo"),

@@ -15,7 +15,7 @@
                     {% for i in certificaciones %}
                         {% if i.img %}
                             <div class="client">
-                                <a href="{% if i.url_referencia %} {{ i.url_referencia }} {% else %} # {% endif %}" target="_blank">
+                                <a href="{% if i.pdf_file %} {{ i.pdf_file.url }} {% else %} # {% endif %}" target="_blank">
                                     <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}">
                                 </a>
                             </div>
