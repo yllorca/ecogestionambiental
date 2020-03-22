@@ -4,7 +4,7 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
     EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
-    EquipoDeleteView, CertificacionDeleteView
+    EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^cliente/editar/form_ajax/(?P<id>\d+)/$', update_cliente_ajax, name='form-update-cliente-ajax'),
 
     url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
+    url(r'^modulo/contactos/eliminar/(?P<id>\d+)$', ContactonDeleteView, name="eliminar-contacto"),
 
     url(r'^modulo/servcios/$', ServiciosPanelView, name="listar-servicios"),
     url(r'^modulo/servicio/(?P<id>\d+)$', ServiciosEditarView, name="detalle-servicio"),

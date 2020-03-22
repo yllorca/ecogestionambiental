@@ -37,6 +37,7 @@
                             <th>Email</th>
                             <th>Fono</th>
                             <th>Mensaje</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -46,6 +47,7 @@
                             <th>Email</th>
                             <th>Fono</th>
                             <th>Mensaje</th>
+                            <th>Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -56,6 +58,11 @@
                                 <td>{{ i.email }}</td>
                                 <td>{{ i.fono }}</td>
                                 <td>{{ i.mensaje }}</td>
+                                <td class="text-center">
+                                    <a href="{% url 'panel:eliminar-contacto' i.pk %}" target="_blank" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

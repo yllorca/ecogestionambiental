@@ -355,16 +355,6 @@ def update_cliente_ajax(request, id):
     raise Http404
 
 @verified_email_required
-def ContactoPanelView(request):
-    if request.user.is_staff:
-
-        data = dict()
-        data['contactos'] = Contacto.objects.all().order_by('-id')
-
-        return render(request, 'panel-contactos.html', data)
-    raise Http404
-
-@verified_email_required
 def ServiciosPanelView(request):
     if request.user.is_staff:
         data = dict()
@@ -643,10 +633,29 @@ def CertificacionDeleteView(request, id):
         return redirect("panel:listar-certificacion")
     raise Http404
 
+@verified_email_required
+def ContactoPanelView(request):
+    if request.user.is_staff:
 
+        data = dict()
+        data['contactos'] = Contacto.objects.all().order_by('-id')
 
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Objeto eliminado con éxito'
+            del request.session['eliminado']
 
+        return render(request, 'panel-contactos.html', data)
+    raise Http404
 
+@verified_email_required
+def ContactonDeleteView(request, id):
+    if request.user.is_staff:
+        contacto = get_object_or_404(Contacto, pk=id)
+        contacto.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-contactos")
+    raise Http404
 
 
 
