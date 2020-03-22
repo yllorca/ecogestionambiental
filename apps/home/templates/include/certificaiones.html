@@ -1,13 +1,13 @@
 {% load staticfiles %}
 <section class="module-sm" id="certificaciones">
-    {#    <div class="container">#}
-    {#        <div class="row">#}
-    {#            <div class="col-md-8 m-auto">#}
-    {#                <div class="module-title text-center">#}
-    {#                    <h2>Certificaciones</h2>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 m-auto">
+                    <div class="module-title text-center">
+                        <h2>Certificaciones</h2>
+                    </div>
+                </div>
+            </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -15,7 +15,7 @@
                     {% for i in certificaciones %}
                         {% if i.img %}
                             <div class="client">
-                                <a href="{% if i.url_referencia %} {{ i.url_referencia }} {% else %} # {% endif %}" target="_blank">
+                                <a href="{% if i.pdf_file %} {{ i.pdf_file.url }} {% else %} # {% endif %}" target="_blank">
                                     <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}">
                                 </a>
                             </div>
@@ -23,7 +23,13 @@
                             <div class="client"><a href="{% if i.url_referencia %} {{ i.url_referencia }} {% else %} # {% endif %}" target="_blank"><img src="{% static 'assets/images/clients/logo-1.png' %}" alt=""></a></div>
                         {% endif %}
                     {% empty %}
-                        <p>Sin info</p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-info"><strong>Ups!</strong> no hay certificados agregados.</div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>

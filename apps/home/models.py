@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
+from tinymce.models import HTMLField
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -17,6 +18,11 @@ def upload_location_certificacion(instance, filename):
     return "certificacion/%s/%s.%s" % (instance.id, instance.id, extension)
     # return "%s/%s" % (instance.id, filename)
 
+def upload_location_pdf(instance, filename):
+    filebase, extension = filename.split(".")
+    return "pdf/%s/%s.%s" % (instance.id, instance.id, extension)
+    # return "%s/%s" % (instance.id, filename)
+
 class Servcio(models.Model):
     CATEGORIA = (
         ('1', 'vigilancia'),
@@ -27,7 +33,7 @@ class Servcio(models.Model):
     nombre = models.CharField(max_length=250)
     slug = models.SlugField(unique=True, max_length=1000, null=True, blank=True)
     categoria = models.CharField(choices=CATEGORIA, max_length=20)
-    descripcion = models.TextField()
+    descripcion = HTMLField('Descripcion')
     img = models.ImageField(upload_to=upload_location,
                                   null=True,
                                   blank=True,
@@ -41,7 +47,6 @@ class Servcio(models.Model):
         verbose_name = 'Servicio'
         verbose_name_plural = 'Servicios'
 
-
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.nombre)
     if new_slug is not None:
@@ -53,13 +58,11 @@ def create_slug(instance, new_slug=None):
         return create_slug(instance, new_slug=new_slug)
     return slug
 
-
 def pre_save_servicio_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
 
 pre_save.connect(pre_save_servicio_receiver, sender=Servcio)
-
 
 class Equipo(models.Model):
     nombre_completo = models.CharField(max_length=100)
@@ -81,11 +84,14 @@ class Equipo(models.Model):
 
 class Certificacion(models.Model):
     nombre_certificacion = models.CharField(max_length=50)
-    url_referencia = models.URLField(blank=True, null=True)
     img = models.ImageField(upload_to=upload_location_certificacion,
                             null=True,
                             blank=True,
                             editable=True)
+    pdf_file = models.FileField(upload_to=upload_location_pdf,
+                                null=True,
+                                blank=True,
+                                editable=True)
     publicado = models.BooleanField(default=True)
 
     def __str__(self):

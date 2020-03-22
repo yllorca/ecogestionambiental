@@ -15,7 +15,7 @@ class EquipoModelAdmin(admin.ModelAdmin):
 
 @admin.register(Certificacion)
 class CertificacionModelAdmin(admin.ModelAdmin):
-    list_display = ('nombre_certificacion', 'url_referencia')
+    list_display = ('nombre_certificacion',)
 
 @admin.register(Contacto)
 class ContactoModelAdmin(admin.ModelAdmin):

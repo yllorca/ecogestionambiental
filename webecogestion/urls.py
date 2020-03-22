@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^', include('apps.home.urls', namespace='home')),
     url(r'^panel/', include('apps.panel.urls', namespace='panel')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

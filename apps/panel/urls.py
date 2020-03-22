@@ -3,7 +3,8 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     form_enviar_reclamo_ajax, update_reclamo_ajax, respuesta_reclamo_ajax, ListarClientesView, \
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
-    EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView
+    EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
+    EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -19,17 +20,22 @@ urlpatterns = [
     url(r'^cliente/editar/form_ajax/(?P<id>\d+)/$', update_cliente_ajax, name='form-update-cliente-ajax'),
 
     url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
+    url(r'^modulo/contactos/eliminar/(?P<id>\d+)$', ContactonDeleteView, name="eliminar-contacto"),
+
     url(r'^modulo/servcios/$', ServiciosPanelView, name="listar-servicios"),
     url(r'^modulo/servicio/(?P<id>\d+)$', ServiciosEditarView, name="detalle-servicio"),
+    url(r'^modulo/servicio/eliminar/(?P<id>\d+)$', ServiciosDeleteView, name="eliminar-servicio"),
     url(r'^modulo/servicio/nuevo/$', ServicioCrearView, name="crear-servicio"),
 
     url(r'^modulo/equipo/$', EquipoListView, name="listar-equipo"),
     url(r'^modulo/equipo/nuevo/$', EquipoCreateView, name="crear-equipo"),
     url(r'^modulo/equipo/(?P<id>\d+)$', EquipoEditView, name="editar-equipo"),
+    url(r'^modulo/equipo/eliminar/(?P<id>\d+)$', EquipoDeleteView, name="eliminar-equipo"),
 
     url(r'^modulo/certificaciones/$', CertificacionListView, name="listar-certificacion"),
     url(r'^modulo/certificaciones/nuevo/$', CertificacionCreateView, name="crear-certificacion"),
     url(r'^modulo/certificacion/(?P<id>\d+)$', CertificacionEditView, name="editar-certificacion"),
+    url(r'^modulo/certificacion/eliminar/(?P<id>\d+)$', CertificacionDeleteView, name="eliminar-certificado"),
 
     url(r'^salir/$', LogoutView, name="salir"),
 ]

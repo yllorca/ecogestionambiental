@@ -1,6 +1,43 @@
 {% load crispy_forms_tags %}
 <div class="row">
     <div class="col-xl-12 col-lg-12">
+        {% if creado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ creado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Mensaje para indicar que se ha editado con exito el convenio-->
+        {% if editado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ editado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if eliminado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ eliminado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -12,6 +49,7 @@
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Acciones:</div>
                         <a class="dropdown-item" href="{% url 'panel:crear-certificacion' %}">Nueva certificación</a>
+                        <a href="{% url 'home:home' %}#certificaciones" class="dropdown-item" target="_blank">Ir a la Sección</a>
                     </div>
                 </div>
             </div>
@@ -22,31 +60,32 @@
                         <thead>
                         <tr>
                             <th>Nombre certificación</th>
-                            <th>Url Ref.</th>
                             <th class="text-center">Logo</th>
                             <th class="text-center">Publicado</th>
+                            <th class="text-center">Pdf</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>Nombre certificación</th>
-                            <th>Url Ref.</th>
                             <th class="text-center">Logo</th>
                             <th class="text-center">Publicado</th>
+                            <th class="text-center">Pdf</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         {% for i  in mis_certificados %}
                             <tr>
                                 <td>{{ i.nombre_certificacion }}</td>
-                                <td>{{ i.url_referencia }}</td>
                                 {% if i.img %}
-                                <td>
-                                    <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}" style="width: 250px">
-                                </td>
-                                    {% else %}
+                                    <td>
+                                        <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}" style="width: 250px">
+                                    </td>
+                                {% else %}
                                     <td>Sin foto</td>
                                 {% endif %}
                                 {% if i.publicado %}
@@ -56,8 +95,23 @@
                                 {% endif %}
 
                                 <td class="text-center">
+                                    {% if i.pdf_file %}
+                                    <a href="{{ i.pdf_file.url }}" target="_blank" class="btn btn-secondary">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
+                                        {% else %}
+                                        <p>Sin archivo</p>
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-center">
                                     <a href="{% url 'panel:editar-certificacion' i.pk %}" target="_blank" class="btn btn-info">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{% url 'panel:eliminar-certificado' i.pk %}" target="_blank" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

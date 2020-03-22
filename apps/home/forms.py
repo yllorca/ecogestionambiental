@@ -24,5 +24,5 @@ class EquipoForm(forms.ModelForm):
 class CertificadoForm(forms.ModelForm):
     class Meta:
         model = Certificacion
-        fields = ['nombre_certificacion', 'url_referencia', 'img', 'publicado']
+        fields = ['nombre_certificacion', 'img', 'pdf_file', 'publicado']
 

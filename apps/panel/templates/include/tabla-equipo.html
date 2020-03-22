@@ -1,6 +1,43 @@
 {% load crispy_forms_tags %}
 <div class="row">
     <div class="col-xl-12 col-lg-12">
+        {% if creado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ creado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Mensaje para indicar que se ha editado con exito el convenio-->
+        {% if editado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ editado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if eliminado %}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ eliminado }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -12,6 +49,7 @@
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Acciones:</div>
                         <a class="dropdown-item" href="{% url 'panel:crear-equipo' %}">Nuevo integrante</a>
+                        <a href="{% url 'home:home' %}#equipo" class="dropdown-item" target="_blank">Ir a la Sección</a>
                     </div>
                 </div>
             </div>
@@ -26,6 +64,7 @@
                             <th>Foto</th>
                             <th class="text-center">Publicado</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -35,6 +74,7 @@
                             <th>Foto</th>
                             <th class="text-center">Publicado</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -43,10 +83,10 @@
                                 <td>{{ i.nombre_completo }}</td>
                                 <td>{{ i.cargo }}</td>
                                 {% if i.img %}
-                                <td>
-                                    <img src="{{ i.img.url }}" alt="{{ i.nombre_completo }}" style="width: 250px">
-                                </td>
-                                    {% else %}
+                                    <td>
+                                        <img src="{{ i.img.url }}" alt="{{ i.nombre_completo }}" style="width: 250px">
+                                    </td>
+                                {% else %}
                                     <td>Sin foto</td>
                                 {% endif %}
                                 {% if i.publicado %}
@@ -58,6 +98,11 @@
                                 <td class="text-center">
                                     <a href="{% url 'panel:editar-equipo' i.pk %}" target="_blank" class="btn btn-info">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                 <td class="text-center">
+                                    <a href="{% url 'panel:eliminar-equipo' i.pk %}" target="_blank" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

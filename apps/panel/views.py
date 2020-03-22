@@ -355,20 +355,25 @@ def update_cliente_ajax(request, id):
     raise Http404
 
 @verified_email_required
-def ContactoPanelView(request):
-    if request.user.is_staff:
-
-        data = dict()
-        data['contactos'] = Contacto.objects.all().order_by('-id')
-
-        return render(request, 'panel-contactos.html', data)
-    raise Http404
-
-@verified_email_required
 def ServiciosPanelView(request):
     if request.user.is_staff:
         data = dict()
+
         data['servicios'] = Servcio.objects.all().order_by('-id')
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Objeto editado con éxito'
+            del request.session['editado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Objeto creado con éxito'
+            del request.session['creado']
+
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Objeto eliminado con éxito'
+            del request.session['eliminado']
 
         return render(request, 'panel-servicios.html', data)
     raise Http404
@@ -389,12 +394,25 @@ def ServiciosEditarView(request, id=None):
                 update_servicio.img = request.FILES['img']
                 update_servicio.save()
 
+            # variable de session usada para notificar que salio todo bien
+            request.session['editado'] = True
+
             return redirect("panel:listar-servicios")
 
         data['detalle_servicio'] = detalle_servicio
         data['form_servicio'] = form_servicio
 
         return render(request, 'panel-detalle-servicio.html', data)
+    raise Http404
+
+@verified_email_required
+def ServiciosDeleteView(request, id):
+    if request.user.is_staff:
+        servicio = get_object_or_404(Servcio, pk=id)
+        servicio.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-servicios")
     raise Http404
 
 @verified_email_required
@@ -413,7 +431,16 @@ def ServicioCrearView(request):
                     new_servicio.img = request.FILES['img']
                     new_servicio.save()
 
+                # variable de session usada para notificar que salio todo bien
+                request.session['creado'] = True
+
                 return redirect('panel:listar-servicios')
+
+            else:
+                mensaje_error = '<strong>Campos requeridos:</strong> <br><ul>'
+                for e in form_servicio.errors:
+                    mensaje_error = '{}<li>{}</li>'.format(mensaje_error, e)
+                data['mensaje'] = '{}{}'.format(mensaje_error, '</ul>')
 
         else:
             ## Cre un formulario para crear una noticia
@@ -429,6 +456,20 @@ def EquipoListView(request):
     if request.user.is_staff:
         data = dict()
         data['mi_equipo'] = Equipo.objects.all()
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Objeto editado con éxito'
+            del request.session['editado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Objeto creado con éxito'
+            del request.session['creado']
+
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Objeto eliminado con éxito'
+            del request.session['eliminado']
 
         return render(request, 'equipo.html', data)
     raise Http404
@@ -449,6 +490,8 @@ def EquipoCreateView(request):
                     new_equipo.img = request.FILES['img']
                     new_equipo.save()
 
+                request.session['creado'] = True
+
                 return redirect('panel:listar-equipo')
 
         else:
@@ -458,6 +501,16 @@ def EquipoCreateView(request):
         data['form_equipo'] = form_equipo
 
         return render(request, 'panel-cerar-equipo.html', data)
+    raise Http404
+
+@verified_email_required
+def EquipoDeleteView(request, id):
+    if request.user.is_staff:
+        equipo = get_object_or_404(Equipo, pk=id)
+        equipo.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-equipo")
     raise Http404
 
 @verified_email_required
@@ -476,6 +529,8 @@ def EquipoEditView(request, id=None):
                 update_equipo.img = request.FILES['img']
                 update_equipo.save()
 
+            request.session['editado'] = True
+
             return redirect("panel:listar-equipo")
 
         data['detalle_equipo'] = detalle_equipo
@@ -489,6 +544,20 @@ def CertificacionListView(request):
     if request.user.is_staff:
         data = dict()
         data['mis_certificados'] = Certificacion.objects.all()
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Objeto editado con éxito'
+            del request.session['editado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Objeto creado con éxito'
+            del request.session['creado']
+
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Objeto eliminado con éxito'
+            del request.session['eliminado']
 
         return render(request, 'certificaciones.html', data)
     raise Http404
@@ -508,6 +577,13 @@ def CertificacionCreateView(request):
                 if 'img' in request.FILES:
                     new_certificado.img = request.FILES['img']
                     new_certificado.save()
+
+                if 'pdf_file' in request.FILES:
+                    new_certificado.pdf_file = request.FILES['pdf_file']
+                    new_certificado.save()
+
+                # variable de session usada para notificar que salio todo bien
+                request.session['creado'] = True
 
                 return redirect('panel:listar-certificacion')
 
@@ -536,6 +612,9 @@ def CertificacionEditView(request, id=None):
                 update_certificado.img = request.FILES['img']
                 update_certificado.save()
 
+            # variable de session usada para notificar que salio todo bien
+            request.session['editado'] = True
+
             return redirect("panel:listar-certificacion")
 
         data['detalle_certificado'] = detalle_certificado
@@ -544,12 +623,39 @@ def CertificacionEditView(request, id=None):
         return render(request, 'panel-detalle-certificado.html', data)
     raise Http404
 
+@verified_email_required
+def CertificacionDeleteView(request, id):
+    if request.user.is_staff:
+        certificado = get_object_or_404(Certificacion, pk=id)
+        certificado.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-certificacion")
+    raise Http404
 
+@verified_email_required
+def ContactoPanelView(request):
+    if request.user.is_staff:
 
+        data = dict()
+        data['contactos'] = Contacto.objects.all().order_by('-id')
 
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Objeto eliminado con éxito'
+            del request.session['eliminado']
 
+        return render(request, 'panel-contactos.html', data)
+    raise Http404
 
-
+@verified_email_required
+def ContactonDeleteView(request, id):
+    if request.user.is_staff:
+        contacto = get_object_or_404(Contacto, pk=id)
+        contacto.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-contactos")
+    raise Http404
 
 
 
