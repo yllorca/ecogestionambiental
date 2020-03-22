@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Third-Party Apps
     'widget_tweaks',
+    'tinymce',
 
     # Local Apps
     'apps.home',
@@ -72,6 +73,20 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+DEFAULT = {
+    'selector': 'textarea',
+    'theme': 'modern',
+    'plugins': 'link image preview codesample contextmenu table code lists',
+    'toolbar1': 'formatselect | bold italic underline | alignleft aligncenter alignright alignjustify '
+               '| bullist numlist | outdent indent | table | link image | codesample | preview code',
+    'contextmenu': 'formats | link image',
+    'menubar': False,
+    'inline': False,
+    'statusbar': True,
+    'width': 'auto',
+    'height': 360,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

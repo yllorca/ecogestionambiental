@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
+from tinymce.models import HTMLField
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -32,7 +33,7 @@ class Servcio(models.Model):
     nombre = models.CharField(max_length=250)
     slug = models.SlugField(unique=True, max_length=1000, null=True, blank=True)
     categoria = models.CharField(choices=CATEGORIA, max_length=20)
-    descripcion = models.TextField()
+    descripcion = HTMLField('Descripcion')
     img = models.ImageField(upload_to=upload_location,
                                   null=True,
                                   blank=True,
