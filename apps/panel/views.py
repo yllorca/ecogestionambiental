@@ -467,6 +467,20 @@ def EquipoListView(request):
         data = dict()
         data['mi_equipo'] = Equipo.objects.all()
 
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'El integrante fue editado con éxito.'
+            del request.session['editado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'El integrante fue creado con éxito'
+            del request.session['creado']
+
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'El integrante fue eliminado con éxito'
+            del request.session['eliminado']
+
         return render(request, 'equipo.html', data)
     raise Http404
 
@@ -486,6 +500,8 @@ def EquipoCreateView(request):
                     new_equipo.img = request.FILES['img']
                     new_equipo.save()
 
+                request.session['creado'] = True
+
                 return redirect('panel:listar-equipo')
 
         else:
@@ -496,6 +512,17 @@ def EquipoCreateView(request):
 
         return render(request, 'panel-cerar-equipo.html', data)
     raise Http404
+
+@verified_email_required
+def EquipoDeleteView(request, id):
+    if request.user.is_staff:
+        equipo = get_object_or_404(Equipo, pk=id)
+        equipo.delete()
+            # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-equipo")
+    raise Http404
+
 
 @verified_email_required
 def EquipoEditView(request, id=None):
@@ -512,6 +539,8 @@ def EquipoEditView(request, id=None):
             if 'img' in request.FILES:
                 update_equipo.img = request.FILES['img']
                 update_equipo.save()
+
+            request.session['editado'] = True
 
             return redirect("panel:listar-equipo")
 
