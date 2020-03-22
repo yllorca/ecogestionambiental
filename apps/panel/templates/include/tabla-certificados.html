@@ -60,26 +60,27 @@
                         <thead>
                         <tr>
                             <th>Nombre certificación</th>
-                            <th>Url Ref.</th>
                             <th class="text-center">Logo</th>
                             <th class="text-center">Publicado</th>
+                            <th class="text-center">Pdf</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>Nombre certificación</th>
-                            <th>Url Ref.</th>
                             <th class="text-center">Logo</th>
                             <th class="text-center">Publicado</th>
+                            <th class="text-center">Pdf</th>
                             <th class="text-center">Editar</th>
+                            <th class="text-center">Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         {% for i  in mis_certificados %}
                             <tr>
                                 <td>{{ i.nombre_certificacion }}</td>
-                                <td>{{ i.pdf_file.url }}</td>
                                 {% if i.img %}
                                     <td>
                                         <img src="{{ i.img.url }}" alt="{{ i.nombre_certificacion }}" style="width: 250px">
@@ -94,8 +95,23 @@
                                 {% endif %}
 
                                 <td class="text-center">
+                                    {% if i.pdf_file %}
+                                    <a href="{{ i.pdf_file.url }}" target="_blank" class="btn btn-secondary">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
+                                        {% else %}
+                                        <p>Sin archivo</p>
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-center">
                                     <a href="{% url 'panel:editar-certificacion' i.pk %}" target="_blank" class="btn btn-info">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{% url 'panel:eliminar-certificado' i.pk %}" target="_blank" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

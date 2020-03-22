@@ -4,7 +4,7 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
     EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
-    EquipoDeleteView
+    EquipoDeleteView, CertificacionDeleteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^cliente/editar/form_ajax/(?P<id>\d+)/$', update_cliente_ajax, name='form-update-cliente-ajax'),
 
     url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
+
     url(r'^modulo/servcios/$', ServiciosPanelView, name="listar-servicios"),
     url(r'^modulo/servicio/(?P<id>\d+)$', ServiciosEditarView, name="detalle-servicio"),
     url(r'^modulo/servicio/eliminar/(?P<id>\d+)$', ServiciosDeleteView, name="eliminar-servicio"),
@@ -33,6 +34,7 @@ urlpatterns = [
     url(r'^modulo/certificaciones/$', CertificacionListView, name="listar-certificacion"),
     url(r'^modulo/certificaciones/nuevo/$', CertificacionCreateView, name="crear-certificacion"),
     url(r'^modulo/certificacion/(?P<id>\d+)$', CertificacionEditView, name="editar-certificacion"),
+    url(r'^modulo/certificacion/eliminar/(?P<id>\d+)$', CertificacionDeleteView, name="eliminar-certificado"),
 
     url(r'^salir/$', LogoutView, name="salir"),
 ]
