@@ -4,7 +4,8 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     DetalleClienteView, crear_cliente_ajax, update_cliente_ajax, ContactoPanelView, \
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
     EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
-    EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView
+    EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView, ListarUsuarios, crear_usuario_ajax, \
+    update_usuario_ajax, DetalleUsuarioView, ClientesDeleteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -14,10 +15,17 @@ urlpatterns = [
     url(r'^form/reclamo/form_ajax/(?P<id>\d+)/$', update_reclamo_ajax, name='form-update-reclamo-ajax'),
     url(r'^form/respuesta/form_ajax/$', respuesta_reclamo_ajax, name='form-respuesta-reclamo-ajax'),
 
+    url(r'^usuarios/$', ListarUsuarios, name="listar-usuarios"),
+    url(r'^usuarios/nuevo/form_ajax/$', crear_usuario_ajax, name="form-crear-usuario-por-ajax"),
+    url(r'^usuario/(?P<id>\d+)$', DetalleUsuarioView, name="detalle-usuario"),
+    url(r'^usuarios/editar/form_ajax/(?P<id>\d+)/$', update_usuario_ajax, name='form-update-usuario-ajax'),
+    # url(r'^usuarios/eliminar/(?P<id>\d+)$', UsuariosDeleteView, name="eliminar-usuario"),
+
     url(r'^clientes/$', ListarClientesView, name="listar-cliente"),
     url(r'^cliente/(?P<id>\d+)$', DetalleClienteView, name="detalle-cliente"),
     url(r'^cliente/nuevo/form_ajax/$', crear_cliente_ajax, name='form-nuevo-cliente'),
     url(r'^cliente/editar/form_ajax/(?P<id>\d+)/$', update_cliente_ajax, name='form-update-cliente-ajax'),
+    url(r'^cliente/eliminar/(?P<id>\d+)/$', ClientesDeleteView, name='eliminar-cliente'),
 
     url(r'^modulo/contactos/$', ContactoPanelView, name="listar-contactos"),
     url(r'^modulo/contactos/eliminar/(?P<id>\d+)$', ContactonDeleteView, name="eliminar-contacto"),

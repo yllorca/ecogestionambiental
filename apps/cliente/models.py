@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -29,7 +31,6 @@ def validar_rut(rut):
     else:
         raise ValidationError(_('%(value)s No es un rut válido'), params={'value': rut}, )
 
-
 class Cliente(models.Model):
     rut = models.CharField(max_length=12, null=False, validators=[validar_rut])
     razon_social = models.CharField(max_length=250)
@@ -37,7 +38,6 @@ class Cliente(models.Model):
     fono = models.CharField(max_length=250, blank=True, null=True)
     contacto_comercial = models.CharField(max_length=250, blank=True, null=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    activo = models.BooleanField(default=True)
 
 
     def save(self, *args, **kwargs):
