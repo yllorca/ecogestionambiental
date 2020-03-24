@@ -25,27 +25,27 @@ $(document).ready(function(){
 
         $('#div-errores').hide();
 
-        $("#form-cliente").on("submit", function(){
+        $("#form-usuario").on("submit", function(){
             let csrftoken = $("[name=csrfmiddlewaretoken]").val();
-            $('#btn-form-cliente').html('Guardando...');
+            $('#btn-form-usuario').html('Guardando...');
             $.ajax({
-                url: $("#form-cliente").attr('data-url'),
+                url: $("#form-usuario").attr('data-url'),
                 type: 'POST',
-                data: $("#form-cliente").serialize(),
+                data: $("#form-usuario").serialize(),
                 headers:{
                     "X-CSRFToken": csrftoken
                 },
                 success:function(data){
                     if(data.respuesta=='ok'){
-                        $('#btn-form-cliente').html('Guardado');
-                        $('#modal_cliente').hide();
+                        $('#btn-form-usuario').html('Guardado');
+                        $('#modal_usuario').hide();
                         location.reload();
                         $('#div-errores').hide();
                     }
                     else{//data.respuesta=='error'
                         $('#id_error').html('');
                         $('#id_error').html(data.mensaje);
-                        $('#btn-form-cliente').html('Guardado');
+                        $('#btn-form-usuario').html('Guardado');
                         $('#div-errores').show();
                     }
                 }
@@ -55,34 +55,33 @@ $(document).ready(function(){
 
         $('#div-errores').hide();
 
-        $("#form-edit-cliente").on("submit", function(){
+        $("#form-editar-usuario").on("submit", function(){
             let csrftoken = $("[name=csrfmiddlewaretoken]").val();
-            $('#btn-form-edit-cliente').html('Guardando...');
+            $('#btn-form-editar-usuario').html('Guardando...');
             $.ajax({
-                url: $("#form-edit-cliente").attr('data-url'),
+                url: $("#form-editar-usuario").attr('data-url'),
                 type: 'POST',
-                data: $("#form-edit-cliente").serialize(),
+                data: $("#form-editar-usuario").serialize(),
                 headers:{
                     "X-CSRFToken": csrftoken
                 },
                 success:function(data){
                     if(data.respuesta=='ok'){
-                        $('#btn-form-edit-cliente').html('Guardado');
-                        $('#modal_editar_cliente').hide();
+                        $('#btn-form-editar-usuario').html('Guardado');
+                        $('#modal_editar_usuario').hide();
                         location.reload();
                         $('#div-errores').hide();
                     }
                     else{//data.respuesta=='error'
                         $('#id_error').html('');
                         $('#id_error').html(data.mensaje);
-                        $('#btn-form-edit-cliente').html('Guardado');
+                        $('#btn-form-editar-usuario').html('Guardado');
                         $('#div-errores').show();
                     }
                 }
             });
             return false;
         });
-
 
     });
 

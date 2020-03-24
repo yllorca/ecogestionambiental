@@ -18,9 +18,9 @@
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Detalles del Cliente</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Detalles del Usuario</h6>
                 <div class="pull-right">
-                    <a data-toggle="modal" data-target="#modal_editar_cliente">
+                    <a data-toggle="modal" data-target="#modal_editar_usuario">
                         <i class="fa fa-2x fa-edit"></i>
                     </a>
                 </div>
@@ -31,48 +31,35 @@
                     <table class="table table-striped">
                         <tbody>
                         <tr>
-                            <td>Razón Social</td>
-                            <td>{{ detalle_cliente.razon_social }}</td>
+                            <td>Usuario</td>
+                            <td>{{ detalle_usuario.username }}</td>
                         </tr>
                         <tr>
-                            <th>Rut</th>
-                            <td>{{ detalle_cliente.rut }}</td>
+                            <td>Email</td>
+                            <td>{{ detalle_usuario.email }}</td>
                         </tr>
                         <tr>
-                            <th>Direccion</th>
-                            {% if detalle_cliente.direccion %}
-                                <td>{{ detalle_cliente.direccion }}</td>
+                            <td>Grupo</td>
+                            {% for group in detalle_usuario.groups.all %}
+                                <td>{{ group }}</td>
+                            {% endfor %}
+
+                        </tr>
+                        <tr>
+                            <td>Estado</td>
+                            {% if detalle_usuario.is_active %}
+                                <td>Activo</td>
                             {% else %}
-                                <td>Sin datos</td>
+                                <td>No activo</td>
                             {% endif %}
                         </tr>
                         <tr>
-                            <th>Fono</th>
-                            {% if detalle_cliente.fono %}
-                                <td>{{ detalle_cliente.fono }}</td>
-                            {% else %}
-                                <td>Sin datos</td>
-                            {% endif %}
+                            <td>Último acceso</td>
+                            <td>{{ detalle_usuario.last_login }}</td>
                         </tr>
                         <tr>
-                            <th>Contacto Comercial</th>
-                            {% if detalle_cliente.contacto_comercial %}
-                                <td>{{ detalle_cliente.contacto_comercial }}</td>
-                            {% else %}
-                                <td>Sin datos</td>
-                            {% endif %}
-                        </tr>
-                        <tr>
-                            <th>Uusuario Web</th>
-                            <td>{{ detalle_cliente.usuario }}</td>
-                        </tr>
-                        <tr>
-                            <th>Estado del cliente</th>
-                            {% if detalle_cliente.usuario.is_active %}
-                                <td> Activo </td>
-                            {% else %}
-                                <td> No activo </td>
-                            {% endif %}
+                            <td>Fecha creación</td>
+                            <td>{{ detalle_usuario.date_joined }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -85,11 +72,11 @@
 </div>
 
 <!-- THE MODAL WE WILL BE USING -->
-<div class="modal fade" id="modal_editar_cliente" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_editar_usuario" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Editar Cliente</h5>
+                <h5 class="modal-title" id="ModalLabel">Editar Usuario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -98,13 +85,13 @@
                 <strong>¡ATENCIÓN!</strong> el formulario tiene errores, intente de nuevo.
                 <p id="id_error"></p>
             </div>
-            <form role="form" method="POST" id="form-edit-cliente" data-url="{% url 'panel:form-update-cliente-ajax' pk_cliente %}"> {% csrf_token %}
+            <form role="form" method="POST" id="form-editar-usuario" data-url="{% url 'panel:form-update-usuario-ajax' pk_usuario %}"> {% csrf_token %}
                 <div class="modal-body">
-                    {{ form_cliente|crispy }}
+                    {{ form_usuario|crispy }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" id="btn-form-edit-cliente">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-form-editar-usuario">Guardar</button>
                 </div>
             </form>
         </div>

@@ -1,5 +1,6 @@
 import xlwt
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,7 +9,7 @@ from django.template.loader import get_template
 from apps.reclamo.models import Reclamo, Respuesta
 from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarReclamoPanelForm
 from apps.cliente.models import Cliente
-from apps.cliente.forms import CrearClienteForm
+from apps.cliente.forms import CrearClienteForm, UsuarioForm
 from apps.reclamo.filters import ReclamoFilter
 from apps.home.models import Contacto, Servcio, Equipo, Certificacion
 from apps.home.forms import ServicioForm, EquipoForm, CertificadoForm
@@ -284,9 +285,26 @@ def ListarClientesView(request):
     if request.user.is_staff:
         data = dict()
         form_cliente = CrearClienteForm()
+        # form_user = UserForm()
 
         data['clientes'] = Cliente.objects.all()
         data['form_cliente'] = form_cliente
+        # data['form_user'] = form_user
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Cliente creado con éxito'
+            del request.session['creado']
+
+        # # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        # if 'editado' in request.session:
+        #     data['editado'] = 'Usuario editado con éxito'
+        #     del request.session['creado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Cliente y usuario eliminados con éxito'
+            del request.session['eliminado']
 
         return render(request, 'clientes.html', data)
     raise Http404
@@ -298,9 +316,11 @@ def crear_cliente_ajax(request):
 
         if request.method == 'POST':
             form_cliente = CrearClienteForm(request.POST)
+
             if form_cliente.is_valid():
                 data['respuesta'] = 'ok'
                 form_cliente.save()
+                request.session['creado'] = True
             else:
                 data['respuesta'] = 'error'
                 mensaje_error = '<strong>Campos requeridos:</strong> <br>'
@@ -326,6 +346,11 @@ def DetalleClienteView(request, id):
         data['pk_cliente'] = id
         data['detalle_cliente'] = detalle_cliente
 
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Cliente editado con éxito'
+            del request.session['editado']
+
         return render(request, 'panel-detalle-cliente.html', data)
     raise Http404
 
@@ -341,6 +366,7 @@ def update_cliente_ajax(request, id):
             if form_cliente.is_valid():
                 data['respuesta'] = 'ok'
                 form_cliente.save()
+                request.session['editado'] = True
             else:
                 data['respuesta'] = 'error'
                 mensaje_error = '<strong>Campos requeridos:</strong> <br>'
@@ -353,6 +379,129 @@ def update_cliente_ajax(request, id):
 
         return JsonResponse(data)
     raise Http404
+
+@verified_email_required
+def ClientesDeleteView(request, id):
+    if request.user.is_staff:
+        cliente = get_object_or_404(User, pk=id)
+        cliente.delete()
+        # variable de session usada para notificar que salio todo bien
+        request.session['eliminado'] = True
+        return redirect("panel:listar-cliente")
+    raise Http404
+
+@verified_email_required
+def ListarUsuarios(request):
+    if request.user.is_staff:
+        data = dict()
+        form_usuario = UsuarioForm()
+
+        data['usuarios'] = User.objects.all().exclude(is_superuser=True)
+        data['form_usuario'] = form_usuario
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Usuario creado con éxito'
+            del request.session['creado']
+
+        # # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        # if 'editado' in request.session:
+        #     data['editado'] = 'Usuario editado con éxito'
+        #     del request.session['creado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'eliminado' in request.session:
+            data['eliminado'] = 'Usuario y Cliente eliminados'
+            del request.session['eliminado']
+
+        return render(request, 'usuarios.html', data)
+    raise Http404
+
+@verified_email_required
+def crear_usuario_ajax(request):
+    if request.user.is_staff:
+        data = dict()
+
+        if request.method == 'POST':
+            form_usuario = UsuarioForm(request.POST)
+
+            if form_usuario.is_valid():
+                data['respuesta'] = 'ok'
+                form_usuario.save()
+
+                # variable de session usada para notificar que salio todo bien
+                request.session['creado'] = True
+
+            else:
+                data['respuesta'] = 'error'
+                mensaje_error = '<strong>Campos:</strong> <br><ul>'
+                for e in form_usuario.errors:
+                    mensaje_error = '{}<li>{}</li>'.format(mensaje_error, e)
+                data['mensaje'] = '{}{}'.format(mensaje_error, '</ul>')
+
+        else:
+            ## Cre un formulario para crear una noticia
+            data['respuesta'] = 'error'
+            data['form_usuario'] = UsuarioForm()
+
+        return JsonResponse(data)
+    raise Http404
+
+@verified_email_required
+def DetalleUsuarioView(request, id):
+    if request.user.is_staff:
+        data = dict()
+
+        detalle_usuario = User.objects.get(pk=id)
+
+        data['form_usuario'] = UsuarioForm(instance=detalle_usuario)
+
+        data['pk_usuario'] = id
+        data['detalle_usuario'] = detalle_usuario
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Usuario editado con éxito'
+            del request.session['editado']
+
+        return render(request, 'panel-detalle-usuario.html', data)
+    raise Http404
+
+@verified_email_required
+def update_usuario_ajax(request, id):
+    if request.user.is_staff:
+        data = dict()
+
+        detalle_usuario = User.objects.get(pk=id)
+
+        if request.method == 'POST':
+            form_usuario = UsuarioForm(request.POST, instance=detalle_usuario)
+            if form_usuario.is_valid():
+                data['respuesta'] = 'ok'
+                form_usuario.save()
+                request.session['editado'] = True
+            else:
+                data['respuesta'] = 'error'
+                mensaje_error = '<strong>Campos:</strong> <br>'
+                for e in form_usuario.errors:
+                    mensaje_error = mensaje_error + ' [{}] '.format(e)
+                data['mensaje'] = mensaje_error
+        else:
+            data['respuesta'] = 'error'
+            data['form_usuario'] = UsuarioForm(request.POST, instance=detalle_usuario)
+
+        return JsonResponse(data)
+    raise Http404
+
+# @verified_email_required
+# def UsuariosDeleteView(request, id):
+#     if request.user.is_staff:
+#         usuario = get_object_or_404(User, pk=id)
+#         usuario.delete()
+#         # variable de session usada para notificar que salio todo bien
+#         request.session['eliminado'] = True
+#         return redirect("panel:listar-usuarios")
+#     raise Http404
 
 @verified_email_required
 def ServiciosPanelView(request):
@@ -410,7 +559,7 @@ def ServiciosDeleteView(request, id):
     if request.user.is_staff:
         servicio = get_object_or_404(Servcio, pk=id)
         servicio.delete()
-            # variable de session usada para notificar que salio todo bien
+        # variable de session usada para notificar que salio todo bien
         request.session['eliminado'] = True
         return redirect("panel:listar-servicios")
     raise Http404
@@ -508,7 +657,7 @@ def EquipoDeleteView(request, id):
     if request.user.is_staff:
         equipo = get_object_or_404(Equipo, pk=id)
         equipo.delete()
-            # variable de session usada para notificar que salio todo bien
+        # variable de session usada para notificar que salio todo bien
         request.session['eliminado'] = True
         return redirect("panel:listar-equipo")
     raise Http404
@@ -628,7 +777,7 @@ def CertificacionDeleteView(request, id):
     if request.user.is_staff:
         certificado = get_object_or_404(Certificacion, pk=id)
         certificado.delete()
-            # variable de session usada para notificar que salio todo bien
+        # variable de session usada para notificar que salio todo bien
         request.session['eliminado'] = True
         return redirect("panel:listar-certificacion")
     raise Http404
@@ -652,7 +801,7 @@ def ContactonDeleteView(request, id):
     if request.user.is_staff:
         contacto = get_object_or_404(Contacto, pk=id)
         contacto.delete()
-            # variable de session usada para notificar que salio todo bien
+        # variable de session usada para notificar que salio todo bien
         request.session['eliminado'] = True
         return redirect("panel:listar-contactos")
     raise Http404
