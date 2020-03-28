@@ -22,6 +22,9 @@
     <!-- Custom styles for this page -->
     <link href="{% static 'dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 
+    <!-- select2 -->
+    <link href="{% static 'assets/css/select2.css' %}" rel="stylesheet" />
+
 </head>
 
 <body id="page-top">
@@ -115,7 +118,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{% static 'dashboard/assets/js/sb-admin-2.min.js' %}"></script>
- <script src="{% static 'dashboard/assets/js/demo/datatables-demo.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/demo/datatables-demo.js' %}"></script>
 
 <!-- select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
@@ -123,7 +126,7 @@
 
 {% block custom-js %}
 
-    <script src="{% static 'reclamo/js/reclamo.js' %}"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -155,6 +158,11 @@
         $('#filtrar_datos, #exportar_datos').click(function(e){
             $('#accion_requerida').val(this.id);
             $('#form_filtros').submit();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#id_cliente').select2({width:'100%', placeholder: "Seleccione un cliente" });
         });
     </script>
 {% endblock custom-js %}

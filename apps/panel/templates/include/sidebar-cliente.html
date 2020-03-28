@@ -21,6 +21,25 @@
 
 <hr class="sidebar-divider">
 
+<div class="sidebar-heading">
+    Gestión de Informes
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#informes" aria-expanded="true" aria-controls="informes">
+        <i class="fas fa-fw fa-file-pdf"></i>
+        <span>Informes</span>
+    </a>
+    <div id="informes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Informes:</h6>
+            <a class="collapse-item" href="{% url 'panel:listar-informes-clientes' %}">Mis Informes</a>
+        </div>
+    </div>
+</li>
+
+<hr class="sidebar-divider">
+
 {#<div class="sidebar-heading">#}
 {#    Gestión de empresas#}
 {#</div>#}
