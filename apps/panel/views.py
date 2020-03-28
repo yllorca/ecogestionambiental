@@ -6,6 +6,10 @@ from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from allauth.account.decorators import verified_email_required
 from django.template.loader import get_template
+
+from apps.informe.models import Informe
+from apps.informe.forms import InformeForm
+from apps.informe.filter import InformeFilter
 from apps.reclamo.models import Reclamo, Respuesta
 from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarReclamoPanelForm
 from apps.cliente.models import Cliente
@@ -13,6 +17,7 @@ from apps.cliente.forms import CrearClienteForm, UsuarioForm
 from apps.reclamo.filters import ReclamoFilter
 from apps.home.models import Contacto, Servcio, Equipo, Certificacion
 from apps.home.forms import ServicioForm, EquipoForm, CertificadoForm
+
 
 def LogoutView(request):
     logout(request)
@@ -806,7 +811,183 @@ def ContactonDeleteView(request, id):
         return redirect("panel:listar-contactos")
     raise Http404
 
+@verified_email_required
+def ListarInformesView(request):
 
+    if request.user.is_staff:
+        data = dict()
+        form_informe = InformeForm()
 
+        informes = Informe.objects.all()
 
+        data['form_informe'] = form_informe
+        data['informes'] = informes
 
+        informe_filter = InformeFilter(request.GET, queryset=informes)
+
+        data['filter'] = informe_filter
+
+        if request.method == 'GET' and 'accion_requerida' in request.GET:
+
+            if request.GET['accion_requerida'] == 'exportar_datos':
+
+                response = HttpResponse(content_type='application/ms-excel')
+                response['Content-Disposition'] = 'attachment; filename="informes.xls"'
+                wb = xlwt.Workbook(encoding='utf-8')
+                ws = wb.add_sheet('Registros')
+
+                # Sheet header, first row
+                row_num = 0
+
+                font_style = xlwt.XFStyle()
+                font_style.font.bold = True
+
+                columns = ['Nº', 'Cliente', 'Nombre del Informe', 'Tipo de Informe', 'Fecha Muestreo', 'fecha_recepcion', 'Fecha Publicación']
+
+                for col_num in range(len(columns)):
+                    ws.write(row_num, col_num, columns[col_num], font_style)
+
+                # Sheet body, remaining rows
+                font_style = xlwt.XFStyle()
+
+                for registro in informe_filter.qs:
+                    row_num += 1
+                    ws.write(row_num, 0, registro.pk ,font_style)
+                    ws.write(row_num, 1, registro.cliente.razon_social, font_style)
+                    ws.write(row_num, 2, registro.nombre_informe, font_style)
+                    ws.write(row_num, 3, registro.get_tipo_informe_display(), font_style)
+                    ws.write(row_num, 4, registro.fecha_muestreo, font_style)
+                    ws.write(row_num, 5, registro.fecha_recepcion, font_style)
+                    ws.write(row_num, 6, registro.fecha_publicacion, font_style)
+
+                wb.save(response)
+                return response
+
+        # # # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'creado' in request.session:
+            data['creado'] = 'Informe creado con éxito'
+            del request.session['creado']
+
+        # Verifico si esta la variable de sesion producto de un redireccionamiento de otra funcion
+        if 'editado' in request.session:
+            data['editado'] = 'Informe editado con éxito'
+            del request.session['editado']
+
+        return render(request, 'informes.html', data)
+
+    raise Http404
+
+@verified_email_required
+def InformeCreateView(request):
+    if request.user.is_staff:
+        data = dict()
+
+        if request.method == 'POST':
+            form_informe = InformeForm(request.POST)
+
+            if form_informe.is_valid():
+                new_informe = form_informe.save()
+
+                ## Guardo la foto una vez creado
+                if 'pdf_file' in request.FILES:
+                    new_informe.pdf_file = request.FILES['pdf_file']
+                    new_informe.save()
+
+                # variable de session usada para notificar que salio todo bien
+                request.session['creado'] = True
+
+                # obtengo la informacion
+                cliente = request.POST['cliente']
+                nombre_informe = request.POST['nombre_informe']
+                tipo_informe = request.POST['tipo_informe']
+                fecha_muestreo = request.POST['fecha_muestreo']
+                fecha_recepcion = request.POST['fecha_recepcion']
+
+                # obtengo la informacion
+                template1 = get_template('email/notifica-informe.html')
+
+                # buscar el label de la tipo de informe
+                label_tipo_informe = ''
+                for x in Informe.TIPO_INFORME:
+                    if x[0] == tipo_informe:
+                        label_tipo_informe = x[1]
+
+                ctx = {
+                    'cliente': cliente,
+                    'nombre_informe': nombre_informe,
+                    'tipo_informe': label_tipo_informe,
+                    'fecha_muestreo': fecha_muestreo,
+                    'fecha_recepcion': fecha_recepcion,
+                }
+
+                contenido1 = template1.render(ctx)
+
+                msg1 = EmailMultiAlternatives(
+                    'Nuevo informe disponible',
+                    contenido1,
+                    'noresponder@ecogestionambiental.cl',
+                    [new_informe.cliente.usuario.email],
+                )
+                msg1.attach_alternative(contenido1, "text/html")
+
+                msg1.send()
+
+                return redirect('panel:listar-informes')
+
+            else:
+                data['respuesta'] = 'error'
+                mensaje_error = '<strong>Campos:</strong> <br><ul>'
+                for e in form_informe.errors:
+                    mensaje_error = '{}<li>{}</li>'.format(mensaje_error, e)
+                data['mensaje'] = '{}{}'.format(mensaje_error, '</ul>')
+
+        else:
+            ## Cree un formulario para crear una noticia
+            form_informe = InformeForm()
+
+        data['form_informe'] = form_informe
+
+        return render(request, 'panel-crear-informe.html', data)
+    raise Http404
+
+@verified_email_required
+def InformeEditView(request, id=None):
+    if request.user.is_staff:
+        data = dict()
+
+        detalle_informe = Informe.objects.get(pk=id)
+
+        form_informe = InformeForm(request.POST or None, request.FILES or None, instance=detalle_informe)
+
+        if form_informe.is_valid():
+            update_informe = form_informe.save()
+
+            if 'pdf_file' in request.FILES:
+                update_informe.pdf_file = request.FILES['pdf_file']
+                update_informe.save()
+
+            # variable de session usada para notificar que salio todo bien
+            request.session['editado'] = True
+
+            return redirect("panel:listar-informes")
+
+        else:
+            data['respuesta'] = 'error'
+            mensaje_error = '<strong>Campos:</strong> <br><ul>'
+            for e in form_informe.errors:
+                mensaje_error = '{}<li>{}</li>'.format(mensaje_error, e)
+            data['mensaje'] = '{}{}'.format(mensaje_error, '</ul>')
+
+        data['detalle_informe'] = detalle_informe
+        data['form_informe'] = form_informe
+
+        return render(request, 'panel-detalle-informe.html', data)
+    raise Http404
+
+@verified_email_required
+def ListarInformesClienteView(request):
+    data = dict()
+
+    data['mis_informes'] = Informe.objects.filter(cliente__usuario=request.user).order_by('-id').exclude(publicado=False)
+
+    return render(request, 'informes.html', data)
