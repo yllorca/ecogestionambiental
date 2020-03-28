@@ -12,7 +12,26 @@
     <div id="reclamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Reclamos / Sugerencias:</h6>
-            <a class="collapse-item" href="{% url 'panel:panel' %}">Ver todas las solicitudes</a>
+            <a class="collapse-item" href="{% url 'panel:panel' %}">Gestión de solicitudes</a>
+        </div>
+    </div>
+</li>
+
+<hr class="sidebar-divider">
+
+<div class="sidebar-heading">
+    Gestión de Informes
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#informes" aria-expanded="true" aria-controls="informes">
+        <i class="fas fa-fw fa-file-pdf"></i>
+        <span>Informes</span>
+    </a>
+    <div id="informes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Informes </h6>
+            <a class="collapse-item" href="{% url 'panel:listar-informes' %}">Gestión de informes</a>
         </div>
     </div>
 </li>
@@ -31,8 +50,8 @@
     <div id="cliente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Clientes</h6>
-             <a class="collapse-item" href="{% url 'panel:listar-usuarios' %}">Usuarios</a>
-            <a class="collapse-item" href="{% url 'panel:listar-cliente' %}">Clientes</a>
+             <a class="collapse-item" href="{% url 'panel:listar-usuarios' %}">Gestión de usuarios</a>
+            <a class="collapse-item" href="{% url 'panel:listar-cliente' %}">Gestión de clientes</a>
         </div>
     </div>
 </li>

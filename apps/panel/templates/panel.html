@@ -1,4 +1,5 @@
 {% extends 'base-dashboard.html' %}
+{% load staticfiles %}
 
 {% block sidebar %}
     {% include 'include/sidebar.html' %}
@@ -19,3 +20,7 @@
 {% block footer %}
     {% include 'include/footer-panel.html' %}
 {% endblock footer %}
+
+{% block custom-js %}
+     <script src="{% static 'reclamo/js/reclamo.js' %}"></script>
+{% endblock custom-js %}

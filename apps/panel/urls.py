@@ -5,7 +5,8 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     ServiciosPanelView, ServiciosEditarView, ServicioCrearView, EquipoListView, EquipoCreateView, \
     EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
     EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView, ListarUsuarios, crear_usuario_ajax, \
-    update_usuario_ajax, DetalleUsuarioView, ClientesDeleteView
+    update_usuario_ajax, DetalleUsuarioView, ClientesDeleteView, ListarInformesView, InformeEditView, \
+    InformeCreateView, ListarInformesClienteView
 
 urlpatterns = [
     url(r'^$', PanelView, name='panel'),
@@ -14,6 +15,11 @@ urlpatterns = [
     url(r'^form/form_ajax$', form_enviar_reclamo_ajax, name='form-reclamo--ajax'),
     url(r'^form/reclamo/form_ajax/(?P<id>\d+)/$', update_reclamo_ajax, name='form-update-reclamo-ajax'),
     url(r'^form/respuesta/form_ajax/$', respuesta_reclamo_ajax, name='form-respuesta-reclamo-ajax'),
+
+    url(r'^informes/$', ListarInformesView, name="listar-informes"),
+    url(r'^my/informes/$', ListarInformesClienteView, name="listar-informes-clientes"),
+    url(r'^informe/(?P<id>\d+)$', InformeEditView, name="editar-informe"),
+    url(r'^informe/nuevo/$', InformeCreateView, name="crear-informe"),
 
     url(r'^usuarios/$', ListarUsuarios, name="listar-usuarios"),
     url(r'^usuarios/nuevo/form_ajax/$', crear_usuario_ajax, name="form-crear-usuario-por-ajax"),

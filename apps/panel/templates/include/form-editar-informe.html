@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Editar Informe</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form method="POST" action='' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {% if form_informe.errors %}
+                        <div class="form-group">
+                            <div class="alert alert-danger" id="div-errores">
+                                <strong>¡ATENCIÓN!</strong> el formulario tiene errores.
+                                <p> {{ mensaje|safe}}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        {% render_field  form_informe.cliente.label %}
+                        {% render_field  form_informe.cliente class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_informe.tipo_informe.label %}
+                        {% render_field  form_informe.tipo_informe class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_informe.nombre_informe.label %}
+                        {% render_field  form_informe.nombre_informe class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_informe.fecha_muestreo.label %}
+                        {% render_field  form_informe.fecha_muestreo class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_informe.fecha_recepcion.label %}
+                        {% render_field  form_informe.fecha_recepcion class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        {% render_field  form_informe.pdf_file.label %}
+                        {% render_field  form_informe.pdf_file class="form-control" %}
+                    </div>
+
+                    <div class="form-form-check form-check-inline">
+                        {% render_field  form_informe.publicado class="form-check-input" %}
+                        {% render_field  form_informe.publicado.label %}
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary" id="btn-form-reclamo">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

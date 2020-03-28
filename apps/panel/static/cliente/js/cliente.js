@@ -23,6 +23,8 @@ $(document).ready(function(){
 
         });
 
+        $('#id_usuario').select2({width:'100%', placeholder: "Seleccione un usuario" });
+
         $('#div-errores').hide();
 
         $("#form-cliente").on("submit", function(){

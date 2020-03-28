@@ -1,0 +1,212 @@
+{% if request.user.is_staff %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    {% include 'include/filter-informe-staff.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <!-- Mensaje para indicar que se ha creado con exito el informe-->
+            {% if creado %}
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ creado }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <!-- Mensaje para indicar que se ha editado con exito el informe-->
+            {% if editado %}
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ editado }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {#        {% if eliminado %}#}
+            {#            <div class="row">#}
+            {#                <div class="form-group col-md-12">#}
+            {#                    <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+            {#                        {{ eliminado }}#}
+            {#                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+            {#                            <span aria-hidden="true">&times;</span>#}
+            {#                        </button>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
+            {#        {% endif %}#}
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Registro de Informes</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Acciones:</div>
+                            <a href="{% url 'panel:crear-informe' %}" class="dropdown-item">Nuevo Informe</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table_datos" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Informe</th>
+                                <th>Cliente</th>
+                                <th>Tipo de Informe</th>
+                                <th>Fecha de Muestreo</th>
+                                <th>Fecha de Recepción</th>
+                                <th>Fecha de Publicación</th>
+                                <th>Habilitado</th>
+                                <th>PDF</th>
+                                <th>Editar</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Nº</th>
+                                <th>Informe</th>
+                                <th>Cliente</th>
+                                <th>Tipo de Informe</th>
+                                <th>Fecha de Muestreo</th>
+                                <th>Fecha de Recepción</th>
+                                <th>Fecha de Publicación</th>
+                                <th>Habilitado</th>
+                                <th>PDF</th>
+                                <th>Editar</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for i  in filter.qs %}
+                                <tr>
+                                    <td>{{ i.pk }}</td>
+                                    <td>{{ i.nombre_informe }}</td>
+                                    <td>{{ i.cliente }}</td>
+                                    <td>{{ i.get_tipo_informe_display }}</td>
+                                    <td>{{ i.fecha_muestreo|date:"d-m-Y" }}</td>
+                                    <td>{{ i.fecha_recepcion|date:"d-m-Y" }}</td>
+                                    <td>{{ i.fecha_publicacion|date:"d-m-Y" }}</td>
+                                    {% if i.publicado  %}
+                                        <td class="text-center">Si</td>
+                                    {% else %}
+                                        <td class="text-center">No</td>
+                                    {% endif %}
+                                    <td class="text-center">
+                                        {% if i.pdf_file %}
+                                            <a href="{{ i.pdf_file.url }}" target="_blank" class="btn btn-danger">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="#" target="_blank" class="btn btn-danger disabled">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'panel:editar-informe' i.pk %}" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% for group in user.groups.all %}
+    {% if group.name == 'clientes' %}
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <!-- Mensaje para indicar que se ha creado con exito el informe-->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Registro de Informes</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="table_datos" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Nº</th>
+                                    <th>Informe</th>
+                                    <th>Tipo de Informe</th>
+                                    <th>Fecha de Muestreo</th>
+                                    <th>Fecha de Recepción</th>
+                                    <th>Fecha de Publicación</th>
+                                    <th>PDF</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Nº</th>
+                                    <th>Informe</th>
+                                    <th>Tipo de Informe</th>
+                                    <th>Fecha de Muestreo</th>
+                                    <th>Fecha de Recepción</th>
+                                    <th>Fecha de Publicación</th>
+                                    <th>PDF</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                {% for i  in mis_informes %}
+                                    <tr>
+                                        <td>{{ i.pk }}</td>
+                                        <td>{{ i.nombre_informe }}</td>
+                                        <td>{{ i.get_tipo_informe_display }}</td>
+                                        <td>{{ i.fecha_muestreo|date:"d-m-Y" }}</td>
+                                        <td>{{ i.fecha_recepcion|date:"d-m-Y" }}</td>
+                                        <td>{{ i.fecha_publicacion|date:"d-m-Y" }}</td>
+                                        <td class="text-center">
+                                            {% if i.pdf_file %}
+                                                <a href="{{ i.pdf_file.url }}" target="_blank" class="btn btn-danger">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" target="_blank" class="btn btn-danger disabled">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

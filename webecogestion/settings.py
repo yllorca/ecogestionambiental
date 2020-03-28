@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'apps.cliente',
     'apps.reclamo',
     'apps.panel',
+    'apps.informe',
 
     # # all auth
     'allauth',
@@ -178,6 +180,7 @@ EMAIL_HOST_PASSWORD = '7e1c70479fde1c0096c63e1d42176c3d-9dfbeecd-eb1004f2'
 EMAIL_MAIN = "Ecogestion Ambiental Ltda <noresponder@ecogestionambiental.cl>"
 EMAIL_USE_TLS = True
 
+LOGIN_REDIRECT_URL = reverse_lazy('panel:panel')
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")
