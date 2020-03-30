@@ -818,7 +818,7 @@ def ListarInformesView(request):
         data = dict()
         form_informe = InformeForm()
 
-        informes = Informe.objects.all()
+        informes = Informe.objects.all().order_by('-id')
 
         data['form_informe'] = form_informe
         data['informes'] = informes
