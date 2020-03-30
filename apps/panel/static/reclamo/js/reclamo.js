@@ -22,6 +22,8 @@ $(document).ready(function(){
 
         });
 
+        $('#id_cliente').select2({width:'100%', placeholder: "Seleccione un usuario" });
+
         //form-edit-datos-reclamo
         $('#div-errores').hide();
 

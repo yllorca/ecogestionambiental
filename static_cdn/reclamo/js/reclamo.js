@@ -25,6 +25,8 @@ $(document).ready(function(){
         //form-edit-datos-reclamo
         $('#div-errores').hide();
 
+        $('#id_cliente').select2({width:'100%', placeholder: "Seleccione un usuario" });
+
         $("#form-edit-reclamo").on("submit", function(){
             let csrftoken = $("[name=csrfmiddlewaretoken]").val();
             $('#btn-form-edit-reclamo').html('Guardando...');
