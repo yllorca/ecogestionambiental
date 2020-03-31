@@ -22,6 +22,11 @@ $(document).ready(function(){
 
         });
 
+        $('#filtrar_datos, #exportar_datos').click(function(e){
+            $('#accion_requerida').val(this.id);
+            $('#form_filtros').submit();
+        });
+
         //form-edit-datos-reclamo
         $('#div-errores').hide();
 
@@ -82,6 +87,9 @@ $(document).ready(function(){
             });
             return false;
         });
+
+
+
 
 
     });
