@@ -38,6 +38,12 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                {% render_field  form.tema.label %}
+                                {% render_field  form.tema class="form-control" placeholder=form.mensaje.label %}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 {% render_field  form.mensaje.label %}
                                 {% render_field  form.mensaje class="form-control" placeholder=form.mensaje.label %}
                             </div>

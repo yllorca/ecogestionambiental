@@ -25,10 +25,10 @@ def upload_location_pdf(instance, filename):
 
 class Servcio(models.Model):
     CATEGORIA = (
-        ('1', 'vigilancia'),
-        ('2', 'estudios'),
-        ('3', 'monitoreos'),
-        ('4', 'laboratorio'),
+        ('1', 'Vigilancia'),
+        ('2', 'Estudios'),
+        ('3', 'Monitoreos'),
+        ('4', 'Laboratorio'),
     )
     nombre = models.CharField(max_length=250)
     slug = models.SlugField(unique=True, max_length=1000, null=True, blank=True)
@@ -102,9 +102,16 @@ class Certificacion(models.Model):
         verbose_name_plural = 'Certificaciones'
 
 class Contacto(models.Model):
+    TEMA = (
+        ('1', 'Quejas'),
+        ('2', 'Segerencias'),
+        ('3', 'Cotizaciones'),
+        ('4', 'Otro'),
+    )
     nombre_completo = models.CharField(max_length=250)
     email = models.EmailField()
     fono = models.CharField(max_length=14)
+    tema = models.CharField(max_length=250, choices=TEMA, blank=True, null=True)
     mensaje = models.TextField()
     fecha = models.DateTimeField(auto_now=False, auto_now_add=True)
 
