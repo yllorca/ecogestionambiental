@@ -177,17 +177,17 @@ def form_enviar_reclamo_ajax(request):
             contenido2 = template2.render(ctx)
 
             msg1 = EmailMultiAlternatives(
-                'Nuevo Reclamo/Sugerencia',
+                'Nueva Queja/Sugerencia',
                 contenido1,
                 'noresponder@ecogestionambiental.cl',
-                ['aaguilera@ecogestionambiental.cl'],
+                ['aaguilera@ecogestionambiental.cl','admin@ecogestionambiental.cl'],
             )
             msg1.attach_alternative(contenido1, "text/html")
 
             msg1.send()
 
             msg2 = EmailMultiAlternatives(
-                'Nuevo Reclamo/Sugerencia',
+                'Nueva Queja/Sugerencia',
                 contenido2,
                 'noresponder@ecogestionambiental.cl',
                 [mi_cliente.usuario.email],
