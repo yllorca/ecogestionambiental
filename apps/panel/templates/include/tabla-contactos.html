@@ -36,6 +36,7 @@
                             <th>Nombre Completo</th>
                             <th>Email</th>
                             <th>Fono</th>
+                            <th>Tema</th>
                             <th>Mensaje</th>
                             <th>Eliminar</th>
                         </tr>
@@ -46,6 +47,7 @@
                             <th>Nombre Completo</th>
                             <th>Email</th>
                             <th>Fono</th>
+                             <th>Tema</th>
                             <th>Mensaje</th>
                             <th>Eliminar</th>
                         </tr>
@@ -57,6 +59,7 @@
                                 <td>{{ i.nombre_completo }}</td>
                                 <td>{{ i.email }}</td>
                                 <td>{{ i.fono }}</td>
+                                <td>{{ i.get_tema_display }}</td>
                                 <td>{{ i.mensaje }}</td>
                                 <td class="text-center">
                                     <a href="{% url 'panel:eliminar-contacto' i.pk %}" class="btn btn-danger">

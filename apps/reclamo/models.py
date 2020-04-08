@@ -10,7 +10,7 @@ class Reclamo(models.Model):
         ('4', 'Cerrado'),
     )
     TIPO_SOLICITUD = (
-        ('1', 'Reclamo'),
+        ('1', 'Queja'),
         ('2', 'Sugerencia'),
     )
     CAT = (
@@ -34,8 +34,8 @@ class Reclamo(models.Model):
         return self.cliente.razon_social
 
     class Meta:
-        verbose_name = 'Reclamo y Segerencia'
-        verbose_name_plural = 'Reclamos y Sugerencias'
+        verbose_name = 'Queja y Segerencia'
+        verbose_name_plural = 'Quejas y Sugerencias'
         ordering = ["id"]
 
 class Respuesta(models.Model):

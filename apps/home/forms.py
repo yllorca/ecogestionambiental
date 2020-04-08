@@ -5,7 +5,7 @@ class ContactoForm(forms.ModelForm):
     class Meta:
         model = Contacto
         exclude = ['fecha']
-        fields = ['nombre_completo', 'email', 'fono', 'mensaje']
+        fields = ['nombre_completo', 'email', 'fono', 'tema', 'mensaje']
 
 
 class ServicioForm(forms.ModelForm):
