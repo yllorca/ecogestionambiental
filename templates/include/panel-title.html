@@ -1,8 +1,16 @@
 {% if request.path == '/panel/' %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h3 mb-0 text-gray-800">Gestión de Informes</h1>
 </div>
 {% endif %}
+
+
+{% if request.path == '/panel/informe/nuevo/' %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nuevo Informe</h1>
+</div>
+{% endif %}
+
 
 {% if request.path == '/panel/clientes/' %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -71,9 +79,22 @@
 </div>
 {% endif %}
 
-{% if request.path == '/panel/informes/' %}
+{% if request.path == '/panel/my/informes/' %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Informes</h1>
+    <h1 class="h3 mb-0 text-gray-800">Mis Informes</h1>
+</div>
+{% endif %}
+
+{% if request.path == '/panel/solicitud/nuevo/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nueva Solicitud</h1>
+</div>
+{% endif %}
+
+
+{% if request.path == '/panel/solicitudes/' %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Registro Solicitudes</h1>
 </div>
 {% endif %}
 

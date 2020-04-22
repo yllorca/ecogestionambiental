@@ -1,27 +1,6 @@
 <hr class="sidebar-divider">
 
 <div class="sidebar-heading">
-    Gestión de Quejas
-</div>
-
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reclamos" aria-expanded="true" aria-controls="reclamos">
-        <i class="fas fa-fw fa-file-alt"></i>
-        <span>Quejas / Sugerencias</span>
-    </a>
-    <div id="reclamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Quejas / Sugerencias:</h6>
-            <a class="collapse-item" href="{% url 'panel:panel' %}">Ver todas las solicitudes</a>
-            <a class="collapse-item" href="{% url 'panel:crear-reclamo' %}">Ingresar una solicitud</a>
-
-        </div>
-    </div>
-</li>
-
-<hr class="sidebar-divider">
-
-<div class="sidebar-heading">
     Gestión de Informes
 </div>
 
@@ -39,6 +18,29 @@
 </li>
 
 <hr class="sidebar-divider">
+
+<div class="sidebar-heading">
+    Gestión de Solicitudes
+</div>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reclamos" aria-expanded="true" aria-controls="reclamos">
+        <i class="fas fa-fw fa-file-alt"></i>
+        <span>Solicitudes</span>
+    </a>
+    <div id="reclamos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Solicitudes:</h6>
+            <a class="collapse-item" href="{% url 'panel:listar-solicitudes' %}">Ver todas mis solicitudes</a>
+            <a class="collapse-item" href="{% url 'panel:crear-reclamo' %}">Ingresar una solicitud</a>
+
+        </div>
+    </div>
+</li>
+
+<hr class="sidebar-divider">
+
+{#<hr class="sidebar-divider">#}
 
 {#<div class="sidebar-heading">#}
 {#    Gestión de empresas#}

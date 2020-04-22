@@ -23,6 +23,17 @@ def LogoutView(request):
     logout(request)
     return redirect('/')
 
+
+def login_success(request):
+    """
+    Redirects users based on whether they are in the admins group
+    """
+    if request.user.is_staff:
+        # user is an admin
+        return redirect("panel:panel")
+    else:
+        return redirect("panel:listar-informes-clientes")
+
 @verified_email_required
 def PanelView(request):
     data = dict()
@@ -125,6 +136,10 @@ def form_enviar_reclamo_ajax(request):
     """
     data = dict()
 
+    correo_segun_solicitud = {'1': 'aaguilera@ecogestionambiental.cl',
+                              '2': 'aaguilera@ecogestionambiental.cl',
+                              '3': 'laboratorio@ecogestionambiental.cl'}
+
     mi_cliente = Cliente.objects.get(usuario=request.user)
 
     if request.method == 'POST':
@@ -177,17 +192,17 @@ def form_enviar_reclamo_ajax(request):
             contenido2 = template2.render(ctx)
 
             msg1 = EmailMultiAlternatives(
-                'Nueva Queja/Sugerencia',
+                'Nuevo ingreso de solicitud',
                 contenido1,
                 'noresponder@ecogestionambiental.cl',
-                ['aaguilera@ecogestionambiental.cl','admin@ecogestionambiental.cl'],
+                [correo_segun_solicitud[str(tipo_solicitud)],'admin@ecogestionambiental.cl', 'jmoscoso@ecogestionambiental.cl'],
             )
             msg1.attach_alternative(contenido1, "text/html")
 
             msg1.send()
 
             msg2 = EmailMultiAlternatives(
-                'Nueva Queja/Sugerencia',
+                'Nuevo ingreso de solicitud',
                 contenido2,
                 'noresponder@ecogestionambiental.cl',
                 [mi_cliente.usuario.email],
@@ -932,7 +947,7 @@ def InformeCreateView(request):
 
                 msg1.send()
 
-                return redirect('panel:listar-informes')
+                return redirect('panel:panel')
 
             else:
                 data['respuesta'] = 'error'
@@ -969,7 +984,7 @@ def InformeEditView(request, id=None):
             # variable de session usada para notificar que salio todo bien
             request.session['editado'] = True
 
-            return redirect("panel:listar-informes")
+            return redirect("panel:panel")
 
         else:
             data['respuesta'] = 'error'
