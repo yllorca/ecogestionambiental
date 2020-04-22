@@ -12,6 +12,8 @@ class Reclamo(models.Model):
     TIPO_SOLICITUD = (
         ('1', 'Queja'),
         ('2', 'Sugerencia'),
+        ('3', 'Modificación de Informe'),
+
     )
     CAT = (
         ('1', 'Resultados de Ensayos'),

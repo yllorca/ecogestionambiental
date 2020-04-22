@@ -81,7 +81,7 @@ DEFAULT = {
     'theme': 'modern',
     'plugins': 'link image preview codesample contextmenu table code lists',
     'toolbar1': 'formatselect | bold italic underline | alignleft aligncenter alignright alignjustify '
-               '| bullist numlist | outdent indent | table | link image | codesample | preview code',
+                '| bullist numlist | outdent indent | table | link image | codesample | preview code',
     'contextmenu': 'formats | link image',
     'menubar': False,
     'inline': False,
@@ -180,7 +180,7 @@ EMAIL_HOST_PASSWORD = '7e1c70479fde1c0096c63e1d42176c3d-9dfbeecd-eb1004f2'
 EMAIL_MAIN = "Ecogestion Ambiental Ltda <noresponder@ecogestionambiental.cl>"
 EMAIL_USE_TLS = True
 
-LOGIN_REDIRECT_URL = reverse_lazy('panel:panel')
+LOGIN_REDIRECT_URL = reverse_lazy('panel:login_success')
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")
