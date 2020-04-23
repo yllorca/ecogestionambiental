@@ -1,6 +1,6 @@
 import xlwt
 from django.contrib.auth import logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.mail import EmailMultiAlternatives
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -22,7 +22,6 @@ from apps.home.forms import ServicioForm, EquipoForm, CertificadoForm
 def LogoutView(request):
     logout(request)
     return redirect('/')
-
 
 def login_success(request):
     """
@@ -302,7 +301,8 @@ def respuesta_reclamo_ajax(request):
 
 @verified_email_required
 def ListarClientesView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
         form_cliente = CrearClienteForm()
         # form_user = UserForm()
@@ -331,7 +331,8 @@ def ListarClientesView(request):
 
 @verified_email_required
 def crear_cliente_ajax(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         if request.method == 'POST':
@@ -356,7 +357,8 @@ def crear_cliente_ajax(request):
 
 @verified_email_required
 def DetalleClienteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_cliente = Cliente.objects.get(pk=id)
@@ -376,7 +378,8 @@ def DetalleClienteView(request, id):
 
 @verified_email_required
 def update_cliente_ajax(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_cliente = Cliente.objects.get(pk=id)
@@ -402,7 +405,8 @@ def update_cliente_ajax(request, id):
 
 @verified_email_required
 def ClientesDeleteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         cliente = get_object_or_404(User, pk=id)
         cliente.delete()
         # variable de session usada para notificar que salio todo bien
@@ -412,7 +416,8 @@ def ClientesDeleteView(request, id):
 
 @verified_email_required
 def ListarUsuarios(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
         form_usuario = UsuarioForm()
 
@@ -439,7 +444,8 @@ def ListarUsuarios(request):
 
 @verified_email_required
 def crear_usuario_ajax(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         if request.method == 'POST':
@@ -469,7 +475,8 @@ def crear_usuario_ajax(request):
 
 @verified_email_required
 def DetalleUsuarioView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_usuario = User.objects.get(pk=id)
@@ -489,7 +496,8 @@ def DetalleUsuarioView(request, id):
 
 @verified_email_required
 def update_usuario_ajax(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_usuario = User.objects.get(pk=id)
@@ -525,7 +533,8 @@ def update_usuario_ajax(request, id):
 
 @verified_email_required
 def ServiciosPanelView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         data['servicios'] = Servcio.objects.all().order_by('-id')
@@ -549,7 +558,8 @@ def ServiciosPanelView(request):
 
 @verified_email_required
 def ServiciosEditarView(request, id=None):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_servicio = Servcio.objects.get(pk=id)
@@ -576,7 +586,8 @@ def ServiciosEditarView(request, id=None):
 
 @verified_email_required
 def ServiciosDeleteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         servicio = get_object_or_404(Servcio, pk=id)
         servicio.delete()
         # variable de session usada para notificar que salio todo bien
@@ -586,7 +597,8 @@ def ServiciosDeleteView(request, id):
 
 @verified_email_required
 def ServicioCrearView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         if request.method == 'POST':
@@ -622,7 +634,8 @@ def ServicioCrearView(request):
 
 @verified_email_required
 def EquipoListView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
         data['mi_equipo'] = Equipo.objects.all()
 
@@ -645,7 +658,8 @@ def EquipoListView(request):
 
 @verified_email_required
 def EquipoCreateView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         if request.method == 'POST':
@@ -674,7 +688,8 @@ def EquipoCreateView(request):
 
 @verified_email_required
 def EquipoDeleteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         equipo = get_object_or_404(Equipo, pk=id)
         equipo.delete()
         # variable de session usada para notificar que salio todo bien
@@ -684,7 +699,8 @@ def EquipoDeleteView(request, id):
 
 @verified_email_required
 def EquipoEditView(request, id=None):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_equipo = Equipo.objects.get(pk=id)
@@ -710,7 +726,8 @@ def EquipoEditView(request, id=None):
 
 @verified_email_required
 def CertificacionListView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
         data['mis_certificados'] = Certificacion.objects.all()
 
@@ -733,7 +750,8 @@ def CertificacionListView(request):
 
 @verified_email_required
 def CertificacionCreateView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         if request.method == 'POST':
@@ -767,7 +785,8 @@ def CertificacionCreateView(request):
 
 @verified_email_required
 def CertificacionEditView(request, id=None):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         data = dict()
 
         detalle_certificado = Certificacion.objects.get(pk=id)
@@ -794,7 +813,8 @@ def CertificacionEditView(request, id=None):
 
 @verified_email_required
 def CertificacionDeleteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         certificado = get_object_or_404(Certificacion, pk=id)
         certificado.delete()
         # variable de session usada para notificar que salio todo bien
@@ -804,7 +824,8 @@ def CertificacionDeleteView(request, id):
 
 @verified_email_required
 def ContactoPanelView(request):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
 
         data = dict()
         data['contactos'] = Contacto.objects.all().order_by('-id')
@@ -818,7 +839,8 @@ def ContactoPanelView(request):
 
 @verified_email_required
 def ContactonDeleteView(request, id):
-    if request.user.is_staff:
+    users_in_group = Group.objects.get(name="admin").user_set.all()
+    if request.user in users_in_group:
         contacto = get_object_or_404(Contacto, pk=id)
         contacto.delete()
         # variable de session usada para notificar que salio todo bien

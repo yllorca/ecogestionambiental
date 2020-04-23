@@ -20,48 +20,6 @@
 <hr class="sidebar-divider">
 
 <div class="sidebar-heading">
-    Gestión de clientes
-</div>
-
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cliente" aria-expanded="true" aria-controls="cliente">
-        <i class="fas fa-fw fa-user-alt"></i>
-        <span>Clientes</span>
-    </a>
-    <div id="cliente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Clientes</h6>
-             <a class="collapse-item" href="{% url 'panel:listar-usuarios' %}">Gestión de usuarios</a>
-            <a class="collapse-item" href="{% url 'panel:listar-cliente' %}">Gestión de clientes</a>
-        </div>
-    </div>
-</li>
-
-<hr class="sidebar-divider">
-
-<div class="sidebar-heading">
-    Gestión de Web
-</div>
-
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#web" aria-expanded="true" aria-controls="web">
-        <i class="fas fa-fw fa-sitemap"></i>
-        <span>Módulos</span>
-    </a>
-    <div id="web" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Módulos</h6>
-             <a class="collapse-item" href="{% url 'panel:listar-servicios' %}">Servicios</a>
-            <a class="collapse-item" href="{% url 'panel:listar-equipo' %}">Equipos</a>
-            <a class="collapse-item" href="{% url 'panel:listar-certificacion' %}">Certificaciones</a>
-            <a class="collapse-item" href="{% url 'panel:listar-contactos' %}">Contactos</a>
-        </div>
-    </div>
-</li>
-
-<hr class="sidebar-divider">
-
-<div class="sidebar-heading">
     Gestión de Solicitudes
 </div>
 
@@ -79,3 +37,52 @@
 </li>
 
 <hr class="sidebar-divider">
+
+{% for group in user.groups.all %}
+    {% if group.name == 'admin' %}
+
+        <div class="sidebar-heading">
+            Gestión de clientes
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cliente" aria-expanded="true" aria-controls="cliente">
+                <i class="fas fa-fw fa-user-alt"></i>
+                <span>Clientes</span>
+            </a>
+            <div id="cliente" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Clientes</h6>
+                    <a class="collapse-item" href="{% url 'panel:listar-usuarios' %}">Gestión de usuarios</a>
+                    <a class="collapse-item" href="{% url 'panel:listar-cliente' %}">Gestión de clientes</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+            Gestión de Web
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#web" aria-expanded="true" aria-controls="web">
+                <i class="fas fa-fw fa-sitemap"></i>
+                <span>Módulos</span>
+            </a>
+            <div id="web" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Módulos</h6>
+                    <a class="collapse-item" href="{% url 'panel:listar-servicios' %}">Servicios</a>
+                    <a class="collapse-item" href="{% url 'panel:listar-equipo' %}">Equipos</a>
+                    <a class="collapse-item" href="{% url 'panel:listar-certificacion' %}">Certificaciones</a>
+                    <a class="collapse-item" href="{% url 'panel:listar-contactos' %}">Contactos</a>
+                </div>
+            </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+    {% endif %}
+{% endfor %}
+
