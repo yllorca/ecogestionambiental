@@ -13,6 +13,7 @@ class Informe(models.Model):
         ('2', 'Asesorías'),
         ('3', 'PVA'),
         ('4', 'Riles'),
+        ('5', 'Muestreo y/o Medición'),
     )
     cliente = models.ForeignKey(Cliente)
     nombre_informe = models.CharField(max_length=250, verbose_name="Nombre del Informe")
