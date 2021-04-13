@@ -80,6 +80,7 @@
                                 <th>Fecha de Muestreo</th>
                                 <th>Fecha de Recepción</th>
                                 <th>Fecha de Publicación</th>
+                                 <th>Fecha de actualización</th>
                                 <th>Habilitado</th>
                                 <th>PDF</th>
                                 <th>Editar</th>
@@ -94,6 +95,7 @@
                                 <th>Fecha de Muestreo</th>
                                 <th>Fecha de Recepción</th>
                                 <th>Fecha de Publicación</th>
+                                 <th>Fecha de actualización</th>
                                 <th>Habilitado</th>
                                 <th>PDF</th>
                                 <th>Editar</th>
@@ -108,7 +110,8 @@
                                     <td>{{ i.get_tipo_informe_display }}</td>
                                     <td>{{ i.fecha_muestreo|date:"d-m-Y" }}</td>
                                     <td>{{ i.fecha_recepcion|date:"d-m-Y" }}</td>
-                                    <td>{{ i.fecha_publicacion|date:"d-m-Y" }}</td>
+                                    <td>{{ i.fecha_publicacion|date:"d-m-Y H:m" }}</td>
+                                    <td>{{ i.fecha_update|date:"d-m-Y H:m" }}</td>
                                     {% if i.publicado  %}
                                         <td class="text-center">Si</td>
                                     {% else %}

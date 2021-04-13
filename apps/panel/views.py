@@ -1,4 +1,5 @@
 import xlwt
+import pytz
 from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
 from django.core.mail import EmailMultiAlternatives
@@ -17,7 +18,6 @@ from apps.cliente.forms import CrearClienteForm, UsuarioForm
 from apps.reclamo.filters import ReclamoFilter
 from apps.home.models import Contacto, Servcio, Equipo, Certificacion
 from apps.home.forms import ServicioForm, EquipoForm, CertificadoForm
-
 
 def LogoutView(request):
     logout(request)
@@ -850,6 +850,7 @@ def ContactonDeleteView(request, id):
 
 @verified_email_required
 def ListarInformesView(request):
+    tz = pytz.timezone("America/Santiago")
 
     if request.user.is_staff:
         data = dict()
@@ -879,7 +880,7 @@ def ListarInformesView(request):
                 font_style = xlwt.XFStyle()
                 font_style.font.bold = True
 
-                columns = ['Nº', 'Cliente', 'Nombre del Informe', 'Tipo de Informe', 'Fecha Muestreo', 'fecha_recepcion', 'Fecha Publicación']
+                columns = ['Nº', 'Cliente', 'Nombre del Informe', 'Tipo de Informe', 'Fecha Muestreo', 'fecha_recepcion', 'Fecha Publicación', 'Fecha de Actualización']
 
                 for col_num in range(len(columns)):
                     ws.write(row_num, col_num, columns[col_num], font_style)
@@ -895,7 +896,8 @@ def ListarInformesView(request):
                     ws.write(row_num, 3, registro.get_tipo_informe_display(), font_style)
                     ws.write(row_num, 4, registro.fecha_muestreo, font_style)
                     ws.write(row_num, 5, registro.fecha_recepcion, font_style)
-                    ws.write(row_num, 6, registro.fecha_publicacion, font_style)
+                    ws.write(row_num, 6, registro.fecha_publicacion.astimezone(tz).strftime("%Y/%m/%d %H:%M"), font_style)
+                    ws.write(row_num, 7, registro.fecha_update.astimezone(tz).strftime("%Y/%m/%d %H:%M"), font_style)
 
                 wb.save(response)
                 return response

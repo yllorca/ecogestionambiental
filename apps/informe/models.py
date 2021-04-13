@@ -24,7 +24,8 @@ class Informe(models.Model):
                                 null=True,
                                 blank=True,
                                 editable=True)
-    fecha_publicacion = models.DateField(auto_now=False, auto_now_add=True)
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
+    fecha_update = models.DateTimeField(auto_now=True)
     publicado = models.BooleanField(default=True)
 
 
