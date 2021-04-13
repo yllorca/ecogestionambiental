@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="eb4ac27e-c915-4ed4-af72-6d6edd081993" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/informe/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/informe/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/panel/templates/include/tabla-informes.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/templates/include/tabla-informes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webecogestion/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/webecogestion/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +73,7 @@
       <workItem from="1618343973453" duration="651000" />
       <workItem from="1618344937566" duration="634000" />
       <workItem from="1618345720857" duration="267000" />
-      <workItem from="1618346088118" duration="3199000" />
+      <workItem from="1618346088118" duration="3747000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>
@@ -82,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618348903279</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="se implementa tz">
+      <created>1618351153841</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618351153841</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

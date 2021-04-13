@@ -1,3 +1,4 @@
+{% load tz %}
 {% if request.user.is_staff %}
     <div class="row">
         <div class="col-xl-12 col-lg-12">
@@ -110,8 +111,8 @@
                                     <td>{{ i.get_tipo_informe_display }}</td>
                                     <td>{{ i.fecha_muestreo}}</td>
                                     <td>{{ i.fecha_recepcion}}</td>
-                                    <td>{{ i.fecha_publicacion }}</td>
-                                    <td>{{ i.updated_at }}</td>
+                                    <td>{{ i.fecha_publicacion|localtime }}</td>
+                                    <td>{{ i.updated_at|localtime }}</td>
                                     {% if i.publicado  %}
                                         <td class="text-center">Si</td>
                                     {% else %}
