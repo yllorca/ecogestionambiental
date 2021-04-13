@@ -108,10 +108,10 @@
                                     <td>{{ i.nombre_informe }}</td>
                                     <td>{{ i.cliente }}</td>
                                     <td>{{ i.get_tipo_informe_display }}</td>
-                                    <td>{{ i.fecha_muestreo|date:"d-m-Y" }}</td>
-                                    <td>{{ i.fecha_recepcion|date:"d-m-Y" }}</td>
-                                    <td>{{ i.fecha_publicacion|date:"d-m-Y H:m" }}</td>
-                                    <td>{{ i.fecha_update|date:"d-m-Y H:m" }}</td>
+                                    <td>{{ i.fecha_muestreo}}</td>
+                                    <td>{{ i.fecha_recepcion}}</td>
+                                    <td>{{ i.fecha_publicacion }}</td>
+                                    <td>{{ i.updated_at }}</td>
                                     {% if i.publicado  %}
                                         <td class="text-center">Si</td>
                                     {% else %}
