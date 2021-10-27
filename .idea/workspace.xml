@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="eb4ac27e-c915-4ed4-af72-6d6edd081993" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/restablecer-migraciones.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webecogestion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webecogestion.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/home/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/home/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/informe/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/informe/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/panel/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/panel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webecogestion/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/webecogestion/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webecogestion/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/webecogestion/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +29,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="desarrollo" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1r83cqLF71N71UpAj3a7i6n01WV" />
@@ -32,13 +51,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="webecogestion" type="Python.DjangoServer" factoryName="Django server">
@@ -119,6 +139,22 @@
       <workItem from="1628614801544" duration="12000" />
       <workItem from="1634479304391" duration="28000" />
       <workItem from="1634479390408" duration="9000" />
+      <workItem from="1635155275054" duration="446000" />
+      <workItem from="1635155975817" duration="208000" />
+      <workItem from="1635156186867" duration="315000" />
+      <workItem from="1635156655186" duration="405000" />
+      <workItem from="1635179277964" duration="182000" />
+      <workItem from="1635179523744" duration="390000" />
+      <workItem from="1635179984660" duration="309000" />
+      <workItem from="1635180323781" duration="71000" />
+      <workItem from="1635180408650" duration="376000" />
+      <workItem from="1635180898873" duration="77000" />
+      <workItem from="1635180988948" duration="293000" />
+      <workItem from="1635181711869" duration="211000" />
+      <workItem from="1635182001273" duration="514000" />
+      <workItem from="1635367018879" duration="261000" />
+      <workItem from="1635367330147" duration="17000" />
+      <workItem from="1635367367854" duration="854000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>

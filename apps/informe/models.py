@@ -15,7 +15,7 @@ class Informe(models.Model):
         ('4', 'Riles'),
         ('5', 'Muestreo y/o Medición'),
     )
-    cliente = models.ForeignKey(Cliente)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     nombre_informe = models.CharField(max_length=250, verbose_name="Nombre del Informe")
     tipo_informe = models.CharField(max_length=250, choices=TIPO_INFORME, verbose_name="Tipo de Informe")
     fecha_muestreo = models.DateField()

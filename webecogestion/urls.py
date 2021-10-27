@@ -18,17 +18,25 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
 from django.views.static import serve
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('apps.home.urls', namespace='home')),
-    url(r'^panel/', include('apps.panel.urls', namespace='panel')),
-    url(r'^accounts/', include('allauth.urls')),
+    path('admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
+    path('panel/',  include('apps.panel.urls', namespace='panel')),
+    path('', include('apps.home.urls', namespace='home')),
+    path('accounts/', include('allauth.urls')),
+    path('accounts/login/', allauth.account.views.LoginView, name='account_login'),
+    path('tinymce/', include('tinymce.urls')),
 
-    url(r'^accounts/login/', allauth.account.views.LoginView, name='account_login'),
-
-    url(r'^tinymce/', include('tinymce.urls')),
+    # url(r'^', include('apps.home.urls', namespace='home')),
+    # url(r'^panel/', include('apps.panel.urls', namespace='panel')),
+    # url(r'^accounts/', include('allauth.urls')),
+    #
+    # url(r'^accounts/login/', allauth.account.views.LoginView, name='account_login'),
+    #
+    # url(r'^tinymce/', include('tinymce.urls')),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

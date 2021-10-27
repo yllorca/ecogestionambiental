@@ -897,7 +897,7 @@ def ListarInformesView(request):
                     ws.write(row_num, 4, registro.fecha_muestreo, font_style)
                     ws.write(row_num, 5, registro.fecha_recepcion, font_style)
                     ws.write(row_num, 6, registro.fecha_publicacion.astimezone(tz).strftime("%Y/%m/%d %H:%M"), font_style)
-                    ws.write(row_num, 7, registro.fecha_update.astimezone(tz).strftime("%Y/%m/%d %H:%M"), font_style)
+                    ws.write(row_num, 7, registro.updated_at.astimezone(tz).strftime("%Y/%m/%d %H:%M"), font_style)
 
                 wb.save(response)
                 return response
