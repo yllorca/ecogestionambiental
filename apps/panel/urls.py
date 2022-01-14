@@ -8,7 +8,7 @@ from .views import PanelView, LogoutView, DetalleReclamoView, EnviarReclamoView,
     EquipoEditView, CertificacionListView, CertificacionCreateView, CertificacionEditView, ServiciosDeleteView, \
     EquipoDeleteView, CertificacionDeleteView, ContactonDeleteView, ListarUsuarios, crear_usuario_ajax, \
     update_usuario_ajax, DetalleUsuarioView, ClientesDeleteView, ListarInformesView, InformeEditView, \
-    InformeCreateView, ListarInformesClienteView, login_success
+    InformeCreateView, ListarInformesClienteView, login_success, get_filter_options, get_informe_chart, informe_per_category_chart
 
 app_name = 'panel'
 
@@ -59,4 +59,9 @@ urlpatterns = [
     path('modulo/certificacion/eliminar/<int:id>', CertificacionDeleteView, name="eliminar-certificado"),
 
     path('salir/', LogoutView, name="salir"),
+
+    #url chart
+    path('chart/filter-options/', get_filter_options, name='chart-filter-options'),
+    path('chart/informes/<int:year>/', get_informe_chart, name='chart-informes'),
+    path('chart/informes/tipo/<int:year>/', informe_per_category_chart, name='chart-informe-tipo'),
 ]

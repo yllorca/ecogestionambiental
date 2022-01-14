@@ -112,7 +112,7 @@
 <script src="{% static 'dashboard/assets/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
 <!-- Page level plugins -->
-<script src="{% static 'dashboard/assets/vendor/chart.js/Chart.min.js' %}"></script>
+{#<script src="{% static 'dashboard/assets/vendor/chart.js/Chart.min.js' %}"></script>#}
 <script src="{% static 'dashboard/assets/vendor/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'dashboard/assets/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
@@ -122,6 +122,8 @@
 
 <!-- select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<!-- Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 
 
 {% block custom-js %}
@@ -161,6 +163,98 @@
         $(document).ready(function() {
             $('#id_cliente').select2({width:'100%', placeholder: "Seleccione un cliente" });
         });
+    </script>
+
+    <script>
+        let informeCtx = document.getElementById("InformeChart").getContext("2d");
+        let InformeChart = new Chart(informeCtx, {
+            type: "bar",
+            options: {
+                responsive: true,
+                tooltips: {
+                    enabled: true,
+                    mode: 'nearest',
+                    intersect: true,
+                },
+                legend: {
+                    display: true,
+                }
+            },
+
+        });
+        let TipoInformeCtx = document.getElementById("TipoInformeChart").getContext("2d");
+        let TipoInformeChart = new Chart(TipoInformeCtx, {
+            type: "doughnut",
+            options: {
+                responsive: true,
+                tooltips: {
+                    enabled: true,
+                    mode: 'nearest',
+                    intersect: true,
+                },
+                legend: {
+                    display: true,
+                },
+            }
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "/panel/chart/filter-options/",
+                type: "GET",
+                dataType: "json",
+                success: (jsonResponse) => {
+                    // Load all the options
+                    jsonResponse.options.forEach(option => {
+                        $("#year").append(new Option(option, option));
+                    });
+                    // Load data for the first option
+                    loadAllCharts($("#year").children().first().val());
+                },
+                error: () => console.log("Failed to fetch chart filter options!")
+            });
+        });
+
+        $("#filterForm").on("submit", (event) => {
+            event.preventDefault();
+
+            const year = $("#year").val();
+            loadAllCharts(year)
+        });
+        function loadChart(chart, endpoint) {
+            $.ajax({
+                url: endpoint,
+                type: "GET",
+                dataType: "json",
+                success: (jsonResponse) => {
+                    // Extract data from the response
+                    const title = jsonResponse.title;
+                    const labels = jsonResponse.data.labels;
+                    const datasets = jsonResponse.data.datasets;
+
+                    // Reset the current chart
+                    chart.data.datasets = [];
+                    chart.data.labels = [];
+
+                    // Load new data into the chart
+                    chart.options.title.text = title;
+                    chart.options.title.display = true;
+                    chart.data.labels = labels;
+                    datasets.forEach(dataset => {
+                        chart.data.datasets.push(dataset);
+                    });
+                    chart.update();
+                },
+                error: () => console.log("Failed to fetch chart data from " + endpoint + "!")
+            });
+        }
+
+        function loadAllCharts(year) {
+            loadChart(InformeChart, `/panel/chart/informes/${year}/`);
+            loadChart(TipoInformeChart, `/panel/chart/informes/tipo/${year}/`);
+        }
     </script>
 {% endblock custom-js %}
 

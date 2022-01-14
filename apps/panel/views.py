@@ -3,6 +3,8 @@ import pytz
 from django.contrib.auth import logout
 from django.contrib.auth.models import User, Group
 from django.core.mail import EmailMultiAlternatives
+from django.db.models import Count
+from django.db.models.functions import ExtractYear, ExtractMonth
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from allauth.account.decorators import verified_email_required
@@ -11,6 +13,7 @@ from django.template.loader import get_template
 from apps.informe.models import Informe
 from apps.informe.forms import InformeForm
 from apps.informe.filter import InformeFilter
+from apps.panel.utils import get_year_dict, months, colorPrimary, generate_color_palette
 from apps.reclamo.models import Reclamo, Respuesta
 from apps.reclamo.forms import ReclamoPanelForm, RespuestaPanelForm, EditarReclamoPanelForm
 from apps.cliente.models import Cliente
@@ -1030,3 +1033,61 @@ def ListarInformesClienteView(request):
     data['mis_informes'] = Informe.objects.filter(cliente__usuario=request.user).order_by('-id').exclude(publicado=False)
 
     return render(request, 'informes.html', data)
+
+
+def get_filter_options(request):
+    grouped_courses = Informe.objects.filter(publicado=True).annotate(year=ExtractYear('fecha_publicacion')).values('year').order_by('-year').distinct()
+    options = [course['year'] for course in grouped_courses]
+
+    return JsonResponse({
+        'options': options,
+    })
+
+def get_informe_chart(request, year):
+    informes = Informe.objects.filter(publicado=True, fecha_publicacion__year=year)
+    grouped_courses = informes.annotate(month=ExtractMonth('fecha_publicacion')) \
+        .values('month').annotate(informe_count=Count('id')).values('month', 'informe_count').order_by('month')
+
+    informes_dict = get_year_dict()
+
+    for group in grouped_courses:
+        informes_dict[months[group['month']-1]] = round(group['informe_count'], 2)
+
+    return JsonResponse({
+        'title': f'Año: {year}',
+        'data': {
+            'labels': list(informes_dict.keys()),
+            'datasets': [{
+                'label': 'Cantidad de Informes por mes',
+                'backgroundColor': colorPrimary,
+                'borderColor': colorPrimary,
+                'data': list(informes_dict.values()),
+            }]
+        },
+    })
+
+def informe_per_category_chart(request, year):
+
+    informes = Informe.objects.filter(publicado=True, fecha_publicacion__year=year)
+    grouped_informe = informes.values('tipo_informe').annotate(tipo_informe_count=Count('id')).values('tipo_informe', 'tipo_informe_count')
+
+    tipo_informe_dict = dict()
+
+    for tipo_informe in Informe.TIPO_INFORME:
+        tipo_informe_dict[tipo_informe[1]] = 0
+
+    for group in grouped_informe:
+        tipo_informe_dict[dict(Informe.TIPO_INFORME)[group['tipo_informe']]] = group['tipo_informe_count']
+
+    return JsonResponse({
+        'title': f'Año: {year}',
+        'data': {
+            'labels': list(tipo_informe_dict.keys()),
+            'datasets': [{
+                'label': 'Total Cursos',
+                'backgroundColor': generate_color_palette(len(tipo_informe_dict)),
+                'borderColor': generate_color_palette(len(tipo_informe_dict)),
+                'data': list(tipo_informe_dict.values()),
+            }]
+        },
+    })
