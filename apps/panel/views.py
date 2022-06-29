@@ -1034,7 +1034,6 @@ def ListarInformesClienteView(request):
 
     return render(request, 'informes.html', data)
 
-
 def get_filter_options(request):
     grouped_courses = Informe.objects.filter(publicado=True).annotate(year=ExtractYear('fecha_publicacion')).values('year').order_by('-year').distinct()
     options = [course['year'] for course in grouped_courses]
