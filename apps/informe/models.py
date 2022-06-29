@@ -12,8 +12,10 @@ class Informe(models.Model):
         ('1', 'Laboratorio de Ensayos'),
         ('2', 'Asesorías'),
         ('3', 'PVA'),
-        ('4', 'Riles'),
+        ('4', 'Aguas Residuales'),
         ('5', 'Muestreo y/o Medición'),
+        ('6', 'Aguas Subterráneas'),
+        ('7', 'Agua Potable'),
     )
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     nombre_informe = models.CharField(max_length=250, verbose_name="Nombre del Informe")
