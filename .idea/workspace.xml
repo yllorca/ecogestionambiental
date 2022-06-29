@@ -9,6 +9,7 @@
       <change beforePath="$PROJECT_DIR$/apps/panel/templates/clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/templates/clientes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/panel/templates/include/tabla-informes.html" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/templates/include/tabla-informes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/panel/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/panel/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/email/notifica-informe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/email/notifica-informe.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,21 +43,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager">
     <configuration name="webecogestion" type="Python.DjangoServer" factoryName="Django server">
       <module name="webecogestion" />
@@ -185,6 +179,7 @@
       <workItem from="1645134735094" duration="4899000" />
       <workItem from="1645641411736" duration="156000" />
       <workItem from="1650391558491" duration="786000" />
+      <workItem from="1656517053660" duration="309000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>
