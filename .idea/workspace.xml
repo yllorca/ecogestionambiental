@@ -5,19 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb4ac27e-c915-4ed4-af72-6d6edd081993" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Dockerfile.agweb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile.agweb-nginx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entrypoint.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx/default.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/dashboard/assets/vendor/fontawesome-free/svgs/brands/adobe 2.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/dashboard/assets/vendor/fontawesome-free/svgs/brands/adobe.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_cdn/dashboard/assets/vendor/fontawesome-free/svgs/brands/adobe 2.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static_cdn/dashboard/assets/vendor/fontawesome-free/svgs/brands/adobe.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webecogestion/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/webecogestion/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +53,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static" />
     </key>
   </component>
   <component name="RunManager">
@@ -198,7 +189,7 @@
       <workItem from="1656517053660" duration="1646000" />
       <workItem from="1659410217691" duration="443000" />
       <workItem from="1659557910012" duration="1910000" />
-      <workItem from="1660568007189" duration="654000" />
+      <workItem from="1660568007189" duration="2298000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>
