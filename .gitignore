@@ -114,4 +114,4 @@ media/
 media/
 media_cdn/
 
-.idea/
+.idea/*
