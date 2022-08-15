@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+    ecogesweb:
+        image: ecogesweb
+        build:
+            context: .
+            dockerfile: Dockerfile.ecoges
+        environment:
+            - PORT=8004
+        env_file:
+            - .env
+        expose:
+            - 8004
+        networks:
+            - nginx-proxy
+        volumes:
+            - static_ecoges:/home/yllorca/dockerdir/ecogesweb/static_cdn/
+            - media_ecoges:/home/yllorca/dockerdir/ecogesweb/media_cdn/
+        restart: always
+
+    nginx:
+        build:
+            context: .
+            dockerfile: Dockerfile.ecoges-nginx
+        expose:
+            - 80
+        environment:
+            - VIRTUAL_HOST=www.ecogestionambiental.cl # Environment variable needed for nginx proxy
+            - LETSENCRYPT_HOST=www.ecogestionambiental.cl # Environment variables needed for Let's Encrypt companion
+            - LETSENCRYPT_EMAIL=yllorca@helloworld.cl
+        networks:
+         - nginx-proxy # Connect this container to network named nginx-proxy, that will be described below
+        restart: always
+        depends_on:
+            - ecogesweb
+        volumes:
+            - static_ecoges:/home/yllorca/dockerdir/ecogesweb/static_cdn/
+networks:
+    nginx-proxy:
+            name: proxy_nginx-proxy # Reference our network that was created by Docker Compose when we launched our two main containers earlier. Name generated automatically. Use `docker network ls` to list all networks and their names.
+
+volumes:
+    static_ecoges:
+        external: true
+    media_ecoges:
+        external: true
