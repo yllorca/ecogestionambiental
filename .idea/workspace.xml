@@ -41,6 +41,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/yllorca/Desktop/Development/ecogestion/webecogestion",
     "node.js.detected.package.eslint": "true",
@@ -55,6 +57,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/static" />
     </key>
   </component>
@@ -189,7 +192,9 @@
       <workItem from="1656517053660" duration="1646000" />
       <workItem from="1659410217691" duration="443000" />
       <workItem from="1659557910012" duration="1910000" />
-      <workItem from="1660568007189" duration="2298000" />
+      <workItem from="1660568007189" duration="2544000" />
+      <workItem from="1660595712196" duration="148000" />
+      <workItem from="1661808113724" duration="780000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>
