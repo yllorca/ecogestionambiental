@@ -89,3 +89,4 @@ volumes:
     nginx-vhost:
     html:
     certs:
+    postgres_data:
