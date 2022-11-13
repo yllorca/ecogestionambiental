@@ -24,9 +24,10 @@ services:
         expose:
             - 80
         environment:
-            - VIRTUAL_HOST=www.ecogestionambiental.cl # Environment variable needed for nginx proxy
-            - LETSENCRYPT_HOST=www.ecogestionambiental.cl # Environment variables needed for Let's Encrypt companion
-            - LETSENCRYPT_EMAIL=yllorca@helloworld.cl
+            - VIRTUAL_HOST=45.33.98.239
+#            - VIRTUAL_HOST=www.ecogestionambiental.cl # Environment variable needed for nginx proxy
+#            - LETSENCRYPT_HOST=www.ecogestionambiental.cl # Environment variables needed for Let's Encrypt companion
+#            - LETSENCRYPT_EMAIL=yllorca@helloworld.cl
         networks:
          - nginx-proxy # Connect this container to network named nginx-proxy, that will be described below
         restart: always
@@ -51,7 +52,7 @@ services:
             - "nginx-vhost:/etc/nginx/vhost.d"
             - "html:/usr/share/nginx/html"
             - "certs:/etc/nginx/certs:ro"
-            - "./custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf"
+            - "proxy/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf"
     letsencrypt:
         container_name: letsencrypt
         image: jrcs/letsencrypt-nginx-proxy-companion
@@ -64,6 +65,7 @@ services:
             - "certs:/etc/nginx/certs:rw"
         depends_on: # Make sure we start nginx proxy container first
             - nginx-proxy
+
     docker-db:
       container_name: docker-db
       image: postgres:9.6
@@ -72,9 +74,9 @@ services:
         - "5432:5432"
       networks:
         - nginx-proxy
-      env_file: ./.env-db
+      env_file: .env-db
       volumes:
-        - ./db/psql-init/db.sql:/docker-entrypoint-initdb.d/db.sql
+        - db/psql-init/db.sql:/docker-entrypoint-initdb.d/db.sql
         - postgres_data:/var/lib/postgresql/data/
 
 networks:
