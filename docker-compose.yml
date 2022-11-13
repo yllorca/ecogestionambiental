@@ -52,7 +52,7 @@ services:
             - "nginx-vhost:/etc/nginx/vhost.d"
             - "html:/usr/share/nginx/html"
             - "certs:/etc/nginx/certs:ro"
-            - "proxy/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf"
+            - "/proxy/custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf"
     letsencrypt:
         container_name: letsencrypt
         image: jrcs/letsencrypt-nginx-proxy-companion
@@ -76,7 +76,7 @@ services:
         - nginx-proxy
       env_file: .env-db
       volumes:
-        - db/psql-init/db.sql:/docker-entrypoint-initdb.d/db.sql
+        - /db/psql-init/db.sql:/docker-entrypoint-initdb.d/db.sql
         - postgres_data:/var/lib/postgresql/data/
 
 networks:
