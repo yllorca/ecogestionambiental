@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb4ac27e-c915-4ed4-af72-6d6edd081993" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/db/psql-init/db.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proxy/custom_proxy_settings.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +198,12 @@
       <workItem from="1660568007189" duration="2544000" />
       <workItem from="1660595712196" duration="148000" />
       <workItem from="1661808113724" duration="1408000" />
-      <workItem from="1661870759848" duration="732000" />
+      <workItem from="1661870759848" duration="1534000" />
+      <workItem from="1661873610531" duration="26000" />
+      <workItem from="1661873715516" duration="124000" />
+      <workItem from="1661896002343" duration="1755000" />
+      <workItem from="1665499805352" duration="1175000" />
+      <workItem from="1668372951103" duration="607000" />
     </task>
     <task id="LOCAL-00001" summary="se implementa tz">
       <created>1618348903279</created>

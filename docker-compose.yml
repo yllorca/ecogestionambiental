@@ -17,7 +17,6 @@ services:
             - static_ecoges:/home/yllorca/dockerdir/ecogesweb/static_cdn/
             - media_ecoges:/home/yllorca/dockerdir/ecogesweb/media_cdn/
         restart: always
-
     nginx:
         build:
             context: .
@@ -35,12 +34,58 @@ services:
             - ecogesweb
         volumes:
             - static_ecoges:/home/yllorca/dockerdir/ecogesweb/static_cdn/
+    nginx-proxy:
+        container_name: nginx-proxy
+        image: jwilder/nginx-proxy:alpine
+        restart: "always" # Always restart container
+        ports:
+            - "80:80" # Port mappings in format host:container
+            - "443:443"
+        networks:
+            - nginx-proxy # Name of the network these two containers will share
+        labels:
+            - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy" # Label needed for Let's Encrypt companion container
+        volumes: # Volumes needed for container to configure proixes and access certificates genereated by Let's Encrypt companion container
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - "nginx-conf:/etc/nginx/conf.d"
+            - "nginx-vhost:/etc/nginx/vhost.d"
+            - "html:/usr/share/nginx/html"
+            - "certs:/etc/nginx/certs:ro"
+            - "./custom_proxy_settings.conf:/etc/nginx/conf.d/custom_proxy_settings.conf"
+    letsencrypt:
+        container_name: letsencrypt
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        restart: always
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+            - "nginx-conf:/etc/nginx/conf.d"
+            - "nginx-vhost:/etc/nginx/vhost.d"
+            - "html:/usr/share/nginx/html"
+            - "certs:/etc/nginx/certs:rw"
+        depends_on: # Make sure we start nginx proxy container first
+            - nginx-proxy
+    docker-db:
+      container_name: docker-db
+      image: postgres:9.6
+      restart: always
+      ports:
+        - "5432:5432"
+      networks:
+        - nginx-proxy
+      env_file: ./.env-db
+      volumes:
+        - ./db/psql-init/db.sql:/docker-entrypoint-initdb.d/db.sql
+        - postgres_data:/var/lib/postgresql/data/
+
 networks:
     nginx-proxy:
-            name: proxy_nginx-proxy # Reference our network that was created by Docker Compose when we launched our two main containers earlier. Name generated automatically. Use `docker network ls` to list all networks and their names.
-
+            name: proxy_nginx-proxy
 volumes:
     static_ecoges:
         external: true
     media_ecoges:
         external: true
+    nginx-conf:
+    nginx-vhost:
+    html:
+    certs:
