@@ -24,10 +24,10 @@ services:
         expose:
             - 80
         environment:
-            - VIRTUAL_HOST=45.33.98.239
-#            - VIRTUAL_HOST=www.ecogestionambiental.cl # Environment variable needed for nginx proxy
-#            - LETSENCRYPT_HOST=www.ecogestionambiental.cl # Environment variables needed for Let's Encrypt companion
-#            - LETSENCRYPT_EMAIL=yllorca@helloworld.cl
+#            - VIRTUAL_HOST=45.33.98.239
+            - VIRTUAL_HOST=www.ecogestionambiental.cl # Environment variable needed for nginx proxy
+            - LETSENCRYPT_HOST=www.ecogestionambiental.cl # Environment variables needed for Let's Encrypt companion
+            - LETSENCRYPT_EMAIL=yllorca@helloworld.cl
         networks:
          - nginx-proxy # Connect this container to network named nginx-proxy, that will be described below
         restart: always
